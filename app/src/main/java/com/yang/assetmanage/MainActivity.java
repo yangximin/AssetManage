@@ -1,37 +1,42 @@
 package com.yang.assetmanage;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.yang.assetmanage.adapter.RVAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    RecyclerView mRecyclerView;
+
+    private RVAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+        initData();
+    }
+
+
+    private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mRecyclerView = findViewById(R.id.rv_bill);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -40,6 +45,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initRcyView();
+
+    }
+
+    private void initData() {
+        List<String> strings = new ArrayList<>();
+        strings.add("日程账本");
+        strings.add("零食账本");
+        strings.add("生活账本");
+        mAdapter.addAll(strings);
+    }
+
+
+    private void initRcyView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new RVAdapter<String>(this, R.layout.item_bill) {
+            @Override
+            protected void convert(ViewHolder vH, String s, int position) {
+                itemConvert(vH, s, position);
+            }
+        };
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void itemConvert(RVAdapter.ViewHolder vH, String s, int position) {
+        vH.setText(R.id.item_bill_name_tv, s);
     }
 
     @Override

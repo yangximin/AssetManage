@@ -1,5 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black_effective">#2a2a2a</color>
+    <!-- 分割线 -->
+    <color name="global_separator_line">#ededed</color>
+    <!-- 绿色 -->
+    <color name="global_green_color">#3de19a</color>
+
+    <color name="global_blue_color">#0000ff</color>
+
+    <color name="global_title_color_blue">#4391F7</color>
+
+    <color name="global_red_button_color">#C00000</color>
+
+    <color name="global_red_button_press_color">#FF8D2618</color>
+
+    <color name="global_white_color">#FFFFFFFF</color>
+
+    <color name="global_blue_text">#005C4C</color>
+
+    <color name="global_black_text_color">#432F30</color>
+
+    <color name="global_black_text_1_color">#2D191A</color>
+
+    <color name="global_black_color">#FF2D191A</color>
+    <!--用于导航文字、1级信息，如标题、层级权重为1级（信息越重要层级权重数字越小）-->
+    <color name="global_title_color">#2D191A</color>
+    <!--有些字体在用的颜色-->
+    <color name="global_second_title_color">#604F4F</color>
+    <!--一级分割线-->
+    <color name="global_one_level_cut_color">#F9F6F6</color>
+    <!--灰色-->
+    <color name="global_gray_color">#D3D3D3</color>
+
+    <color name="global_gray_text_color">#7D7D7D</color>
+    <!--用于3级信息、如标题、副文、说明及提示文层级权重为2级和3级，下拉选择等-->
+    <color name="global_subtitle_color">#B9AFAF</color>
+    <!--透明-->
+    <color name="global_transparent_color">#0fff</color>
+    <!--白色按钮点击色-->
+    <color name="global_white_btn_press_color">#F9F6F6</color>
+    <!--说明文字色-->
+    <!--半透明色-->
+    <color name="global_translucent_color">#3f000000</color>
+
+    <color name="global_stroke">#E8E1E1</color>
+    <!--5.0-6.0的appbar颜色-->
+    <color name="global_v21_app_bar">#484848</color>
+    <!--分类文字色-->
+    <color name="global_classify_color">#005C4C</color>
+    <!--用于顶部提示文本背景-->
+    <color name="global_header_text_bg">#F7F6F6</color>
+    <!--还款页面的绿色-->
+    <color name="global_repayment_green">#589288</color>
+
+    <color name="global_coupon_bg">#F9F8F8</color>
+
+    <color name="global_orange_color">#ff7900</color>
+
+
+    <color name="global_list_text_color">#604F4F</color>
+    <color name="global_float_transparent">#00000000</color>
+    
+    <color name="global_inner_stroke">#E5E0E0</color>
+    <color name="global_inner_stroke1">#281E18</color>
+
+    <!--标题黑色，普通内容黑色-->
+    <color name="global_black">#2D191A</color>
+    <!--内容中块二级标题-->
+    <color name="global_sub_black">#706465</color>
+    <!--内容中或者弹框中的灰色-->
+    <color name="global_gray">#B9AFAF</color>
+    <!--首页底部特殊处理-->
+    <color name="global_main_tab_color">#857475</color>
+    <!--分割线  Android: 1dp-->
+    <color name="global_divider_color">#EDEDED</color>
+    <color name="global_white">#FFFFFFFF</color>
+
+    <color name="bottom_guide_normal_color">#FFE6E6E6</color>
+    <color name="bottom_guide_select_color">#FFB30100</color>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
