@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yang.assetmanage.adapter.RVAdapter;
+import com.yang.assetmanage.db.DBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         init();
         initData();
+        DBUtils.getInstance();
     }
 
 
