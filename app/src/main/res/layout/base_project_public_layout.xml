@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_white">
+
+    <RelativeLayout
+        android:id="@+id/rel_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <!--返回按钮-->
+        <ImageButton
+            android:id="@+id/title_left_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/base_title_back_icon" />
+        <!--中间按钮-->
+        <ImageButton
+            android:id="@+id/title_center_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone" />
+        <!--中间文本-->
+        <TextView
+            android:id="@+id/title_center_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="@color/global_black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!--标题栏底下阴影-->
+    <View
+        android:id="@+id/base_header_divider"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_below="@+id/rel_title_bar"
+        android:background="@drawable/base_project_title_divider" />
+</RelativeLayout>

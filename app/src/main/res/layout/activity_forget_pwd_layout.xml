@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yang.assetmanage.view.MyEditTextView
+        android:id="@+id/forget_pwd_user_name_edt"
+        style="@style/MyEditText"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/login_input_name"
+        android:maxLength="16"
+        android:singleLine="true"
+        app:my_edt_bg_type="frame" />
+
+    <com.yang.assetmanage.view.MyEditTextView
+        android:id="@+id/forget_pwd_user_id_card_edt"
+        style="@style/MyEditText"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:digits="0123456789xX"
+        android:hint="@string/login_id_card_last_number_hint"
+        android:maxLength="6"
+        android:singleLine="true"
+        app:my_edt_bg_type="frame" />
+
+    <com.yang.assetmanage.view.MyEditTextView
+        android:id="@+id/forget_pwd_old_pwd_edt"
+        style="@style/MyEditText"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/login_old_pwd_hint"
+        android:maxLength="16"
+        android:singleLine="true"
+        android:visibility="gone"
+        app:my_edt_bg_type="frame"
+        app:my_edt_input_type="password" />
+
+    <com.yang.assetmanage.view.MyEditTextView
+        android:id="@+id/forget_pwd_new_pwd_edt"
+        style="@style/MyEditText"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/login_new_pwd_hint"
+        android:maxLength="16"
+        android:singleLine="true"
+        app:my_edt_bg_type="frame"
+        app:my_edt_input_type="password" />
+
+    <com.yang.assetmanage.view.MyEditTextView
+        android:id="@+id/forget_pwd_confirm_pwd_edt"
+        style="@style/MyEditText"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/login_confirm_pwd_hint"
+        android:maxLength="16"
+        android:singleLine="true"
+        app:my_edt_bg_type="frame"
+        app:my_edt_input_type="password" />
+
+    <TextView
+        android:id="@+id/confirm_btn"
+        style="@style/RedBgBtn"
+        android:layout_marginTop="40dp"
+        android:text="@string/login_confirm" />
+</LinearLayout>
