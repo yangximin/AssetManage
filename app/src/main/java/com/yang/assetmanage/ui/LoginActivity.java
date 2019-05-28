@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity {
         DbUtils dbUtils = DbUtils.getInstance();
         boolean isSuccess = dbUtils.login(userName, pwd);
         if (isSuccess) {
-            toActivity(MainActivity.class);
+            toActivity(CreateGesturePasswordActivity.class);
         } else {
             showMessage("用户名密码错误，请重新登录");
         }

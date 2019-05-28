@@ -87,13 +87,13 @@ public class DbUtils {
         boolean isSuccess = false;
         Cursor cursor = null;
         try {
-            cursor = mSqLiteDatabase.rawQuery("SELECT USER_NAME FROM user WHERE USER_NAME = ? And IDCARD =?", new String[]{forgetPwd.getName(), forgetPwd.getIdCard()});
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM user WHERE USER_NAME = ? And IDCARD =?", new String[]{forgetPwd.getName(), forgetPwd.getIdCard()});
             if (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex("_ID"));
                 if (!TextUtils.isEmpty(id)) {
                     ContentValues cv = new ContentValues();
                     cv.put("PASSWORD", forgetPwd.getPwd());
-                    mSqLiteDatabase.update("USER_NAME", cv, "_ID=?", new String[]{id});
+                    mSqLiteDatabase.update("user", cv, "_ID=?", new String[]{id});
                     isSuccess = true;
                 }
             }

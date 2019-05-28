@@ -128,4 +128,6 @@
     <color name="component_list_bg">#FFF6F6F7</color>
 
     <color name="common_line_color">#E8E1E1</color>
+    <!-- 71,71,73 -->
+    <color name="gesture_background">#474749</color>
 </resources>

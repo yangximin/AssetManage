@@ -58,4 +58,9 @@
     <string name="login_idcard_hint">请输入身份证后6位</string>
     <string name="login_quick_login">快速登录</string>
     <string name="error_field_must_not_be_empty">输入不能为空</string>
+
+    <string name="lockscreen_access_pattern_start">"开始绘制图案"</string>
+    <string name="lockscreen_access_pattern_cleared">"图案已清除"</string>
+    <string name="lockscreen_access_pattern_cell_added">"已添加单元格"</string>
+    <string name="lockscreen_access_pattern_detected">"图案绘制完成"</string>
 </resources>

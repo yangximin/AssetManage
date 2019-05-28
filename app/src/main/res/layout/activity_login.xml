@@ -38,10 +38,8 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:drawableLeft="@drawable/base_user_phone_icon"
-                android:ems="10"
                 android:hint="@string/login_input_name"
-                android:inputType="number"
-                android:maxLength="11"
+                android:text="yangxm"
                 android:singleLine="true"
                 app:my_edt_bg_type="frame" />
 
@@ -55,6 +53,7 @@
                 android:ems="10"
                 android:hint="@string/login_input_password"
                 android:maxLength="16"
+                android:text="a123456"
                 android:singleLine="true"
                 app:my_edt_bg_type="frame"
                 app:my_edt_input_type="password" />

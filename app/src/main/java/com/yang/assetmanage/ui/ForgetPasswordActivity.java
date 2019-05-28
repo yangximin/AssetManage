@@ -39,8 +39,8 @@ public class ForgetPasswordActivity extends BaseActivity {
     protected void initView() {
         mUserNameEdt = findViewById(R.id.forget_pwd_user_name_edt);
         mIdCardEdt = findViewById(R.id.forget_pwd_user_id_card_edt);
-        mPwdEdt = findViewById(R.id.forget_pwd_old_pwd_edt);
-        mConfirmPwdEdt = findViewById(R.id.forget_pwd_new_pwd_edt);
+        mPwdEdt = findViewById(R.id.forget_pwd_new_pwd_edt);
+        mConfirmPwdEdt = findViewById(R.id.forget_pwd_confirm_pwd_edt);
         mConfirmBtn = findViewById(R.id.confirm_btn);
     }
 
@@ -49,7 +49,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         mConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                confirmCommit();
             }
         });
     }
@@ -108,6 +108,13 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     private void startUpDataPassword(ForgetPwd forgetPwd) {
         DbUtils dbUtils = DbUtils.getInstance();
+        boolean isSuccess = dbUtils.upSetPassword(forgetPwd);
+        if (isSuccess){
+            showMessage("修改密码成功");
+            finish();
+        }else {
+            showMessage("修改密码失败，请确认信息是否正确");
+        }
 //        dbUtils
 
     }
