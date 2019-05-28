@@ -60,7 +60,7 @@
 
     <color name="global_list_text_color">#604F4F</color>
     <color name="global_float_transparent">#00000000</color>
-    
+
     <color name="global_inner_stroke">#E5E0E0</color>
     <color name="global_inner_stroke1">#281E18</color>
 
@@ -82,4 +82,50 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="component_line_gray_color">#D3D3D3</color>
+    <!-- 分割线 -->
+    <color name="component_separator_line">#ededed</color>
+    <!-- 绿色 -->
+    <color name="component_green_color">#3de19a</color>
+
+    <color name="component_blue_color">#0000ff</color>
+
+    <color name="component_title_color_blue">#4391F7</color>
+
+    <color name="component_pull_down_view_color">#C00000</color>
+
+    <color name="component_red_button_color">#C00000</color>
+
+    <color name="component_red_color">#ff0000</color>
+
+    <color name="component_white_color">#FFFFFFFF</color>
+
+    <color name="component_blue_text">#005C4C</color>
+
+    <color name="component_gray_text">#005C4C</color>
+
+    <color name="component_black_color">#FF2D191A</color>
+    <!--一级分割线-->
+    <color name="component_one_level_cut_color">#F9F6F6</color>
+    <!--灰色-->
+    <color name="component_gray_color">#D3D3D3</color>
+    <!--用于3级信息、如标题、副文、说明及提示文层级权重为2级和3级，下拉选择等-->
+    <color name="component_subtitle_color">#B7AFAF</color>
+    <!--透明-->
+    <color name="component_transparent_color">#0fff</color>
+    <!--白色按钮点击色-->
+    <color name="component_white_btn_press_color">#F9F6F6</color>
+    <!--说明文字色-->
+    <color name="component_hint_gray_color">#B7AFAF</color>
+    <!--分类文字色-->
+    <color name="component_classify_color">#005C4C</color>
+
+
+    <color name="component_common_bg">#F9F8F8</color>
+
+
+    <color name="component_list_bg">#FFF6F6F7</color>
+
+    <color name="common_line_color">#E8E1E1</color>
 </resources>

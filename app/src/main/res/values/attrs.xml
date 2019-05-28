@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyEditTextView">
+        <attr name="my_edt_right_icon" format="reference" />
+        <attr name="my_edt_left_icon" format="reference" />
+        <!--是否需要显示框框背景-->
+        <attr name="my_edt_bg_type">
+            <flag name="frame" value="1" />
+            <flag name="bottomLine" value="2" />
+            <flag name="round" value="3" />
+            <flag name="custom" value="4" />
+        </attr>
+        <attr name="my_edt_input_type">
+            <flag name="normal" value="0" />
+            <flag name="password" value="1" />
+            <flag name="sms" value="2" />
+        </attr>
+        <attr name="my_edt_hint" format="string" />
+    </declare-styleable>
+</resources>

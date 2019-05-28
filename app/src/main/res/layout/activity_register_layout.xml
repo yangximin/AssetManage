@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/component_white_color">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:text="@string/register_welcome"
+                android:textColor="@color/global_black"
+                android:textSize="@dimen/text_size_title" />
+
+            <com.yang.assetmanage.view.MyEditTextView
+                android:id="@+id/userName"
+                style="@style/MyEditText"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:drawableLeft="@drawable/base_user_phone_icon"
+                android:ems="10"
+                android:hint="@string/login_input_name"
+                android:inputType="text"
+                android:text="yangxm"
+                android:maxLength="16"
+                android:singleLine="true"
+                app:my_edt_bg_type="frame" />
+
+            <com.yang.assetmanage.view.MyEditTextView
+                android:id="@+id/userPassword"
+                style="@style/MyEditText"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:text="a123456"
+                android:drawableLeft="@drawable/base_pwd_left_icon"
+                android:ems="10"
+                android:hint="@string/login_input_password"
+                android:maxLength="16"
+                android:singleLine="true"
+                app:my_edt_bg_type="frame"
+                app:my_edt_input_type="password" />
+
+            <com.yang.assetmanage.view.MyEditTextView
+                android:id="@+id/register_id_card"
+                style="@style/MyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="22dp"
+                android:text="123456"
+                android:digits="1234567890Xx"
+                android:hint="@string/login_id_card_last_number_hint"
+                android:inputType="number"
+                android:maxLength="6"
+                android:singleLine="true"
+                app:my_edt_bg_type="bottomLine" />
+
+            <TextView
+                android:id="@+id/register_button"
+                style="@style/RedBgBtn"
+                android:text="@string/login_register" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_now"
+            android:textColor="@color/global_black"
+            android:textSize="@dimen/text_size_content" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/global_black" />
+
+        <TextView
+            android:id="@+id/login_forget_pwd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_forget_password"
+            android:textColor="@color/global_black"
+            android:textSize="@dimen/text_size_content" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:startColor="#edF3EDEC"
+                android:centerColor="#1aF3EDEC"
+                android:endColor="#0dffffff"/>
+
+        </shape>
+    </item>
+
+    <!--<item android:bottom="8dp">&lt;!&ndash;距离底部8dp，即阴影大小&ndash;&gt;-->
+        <!--<shape>-->
+            <!--<solid android:color="@android:color/white" />-->
+        <!--</shape>-->
+    <!--</item>-->
+
+</layer-list>
