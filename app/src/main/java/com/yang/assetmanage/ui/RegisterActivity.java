@@ -8,10 +8,12 @@ import android.widget.TextView;
 import com.gyf.barlibrary.OnKeyboardListener;
 import com.yang.assetmanage.MainActivity;
 import com.yang.assetmanage.R;
-import com.yang.assetmanage.db.DBUtils;
+import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.User;
+import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.Regular;
+import com.yang.assetmanage.utils.SPUtil;
 
 /**
  * Created by YXM
@@ -104,20 +106,20 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void startRegister(String userName, String pwd, String idCard) {
-        DBUtils DBUtils = DBUtils.getInstance();
-        if (DBUtils.isExistUser(userName)) {
+        DbUtils DbUtils = com.yang.assetmanage.db.DbUtils.getInstance();
+        if (DbUtils.isExistUser(userName)) {
             showMessage("该用户已注册，请直接登录");
             return;
         }
-
         User user = new User();
         user.setName(userName);
         user.setPassword(pwd);
         user.setIdCard(idCard);
         user.setRegisterDate(System.currentTimeMillis());
-        boolean isSuccess = DBUtils.insertUser(user);
+        boolean isSuccess = DbUtils.insertUser(user);
         if (isSuccess) {
-            toActivity(MainActivity.class);
+            SPUtil.saveObjData(this, Constants.Sp.SP_KEY_USER_INFO,user);
+            toActivity(CreateGesturePasswordActivity.class);
         } else {
             showMessage("注册失败，请重新注册");
         }

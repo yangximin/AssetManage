@@ -5,7 +5,7 @@ package com.yang.assetmanage.entity;
  * on 2019/5/28.
  */
 
-public class ForgetPwd {
+public class ForgetPwd extends BaseEntity{
 
     String name;
 

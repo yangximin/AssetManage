@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.gyf.barlibrary.OnKeyboardListener;
 import com.yang.assetmanage.R;
-import com.yang.assetmanage.db.DBUtils;
+import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.User;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.EncryptUtil;
@@ -97,11 +97,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void startLogin(String userName, String pwd) {
-        DBUtils DBUtils = DBUtils.getInstance();
-        User user = DBUtils.login(userName, pwd);
+        DbUtils DbUtils = com.yang.assetmanage.db.DbUtils.getInstance();
+        User user = DbUtils.login(userName, pwd);
         if (user != null) {
             toActivity(CreateGesturePasswordActivity.class);
-            SPUtil.saveData(this, Constants.Sp.SP_KEY_USER_INFO,user);
+            SPUtil.saveObjData(this, Constants.Sp.SP_KEY_USER_INFO, user);
         } else {
             showMessage("用户名密码错误，请重新登录");
         }
@@ -109,6 +109,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        User user = (User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
+        if (user != null) {
+            toActivity(CreateGesturePasswordActivity.class);
+        }
     }
 }

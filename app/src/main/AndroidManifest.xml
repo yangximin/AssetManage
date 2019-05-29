@@ -38,6 +38,9 @@
         <activity
             android:name=".ui.CreateGesturePasswordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AddBillActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

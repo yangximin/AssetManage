@@ -7,11 +7,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.yang.assetmanage.adapter.RVAdapter;
+import com.yang.assetmanage.db.DbUtils;
+import com.yang.assetmanage.entity.Bill;
+import com.yang.assetmanage.entity.User;
+import com.yang.assetmanage.ui.AddBillActivity;
 import com.yang.assetmanage.ui.BaseActivity;
+import com.yang.assetmanage.utils.Constants;
+import com.yang.assetmanage.utils.SPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +28,9 @@ public class MainActivity extends BaseActivity {
 
     RecyclerView mRecyclerView;
 
-    private RVAdapter<String> mAdapter;
+    private RVAdapter<Bill> mAdapter;
+
+    DbUtils mDbUtils;
 
     @Override
     protected int getLayoutId() {
@@ -48,59 +58,41 @@ public class MainActivity extends BaseActivity {
     }
 
     protected void initData() {
-        List<String> strings = new ArrayList<>();
-        strings.add("日程账本");
-        strings.add("零食账本");
-        strings.add("生活账本");
-        mAdapter.addAll(strings);
+        User user = (com.yang.assetmanage.entity.User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
+        mDbUtils = DbUtils.getInstance();
+        List<Bill> bills = mDbUtils.selectBill(user == null ? "" : user.getId());
+        mAdapter.clear();
+        mAdapter.addAll(bills);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+    }
 
     private void initRcyView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RVAdapter<String>(this, R.layout.item_bill) {
+        mAdapter = new RVAdapter<Bill>(this, R.layout.item_bill) {
             @Override
-            protected void convert(ViewHolder vH, String s, int position) {
-                itemConvert(vH, s, position);
+            protected void convert(ViewHolder vH, Bill bill, int position) {
+                itemConvert(vH, bill, position);
             }
         };
         mRecyclerView.setAdapter(mAdapter);
+        View footerView = LayoutInflater.from(this).inflate(R.layout.item_bill_footer, null);
+        footerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(AddBillActivity.class);
+            }
+        });
+        mAdapter.addFooterView(footerView);
     }
 
-    private void itemConvert(RVAdapter.ViewHolder vH, String s, int position) {
-        vH.setText(R.id.item_bill_name_tv, s);
+    private void itemConvert(RVAdapter.ViewHolder vH, Bill bill, int position) {
+        vH.setText(R.id.item_bill_name_tv, bill.getBillName());
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }

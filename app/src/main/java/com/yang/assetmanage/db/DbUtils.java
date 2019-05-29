@@ -6,28 +6,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.yang.assetmanage.app.MyApplication;
+import com.yang.assetmanage.entity.Bill;
 import com.yang.assetmanage.entity.ForgetPwd;
 import com.yang.assetmanage.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YXM
  * on 2019/5/28.
  */
 
-public class DBUtils {
+public class DbUtils {
 
-    SQLiteDatabase mSqLiteDatabase;
+    private SQLiteDatabase mSqLiteDatabase;
 
-    public static DBUtils getInstance() {
+    public static DbUtils getInstance() {
         return SingleDbUtils.INSTANCE;
     }
 
     private static class SingleDbUtils {
 
-        private static final DBUtils INSTANCE = new DBUtils();
+        private static final DbUtils INSTANCE = new DbUtils();
     }
 
-    DBUtils() {
+    DbUtils() {
         SQLiteDbHelper sqLiteDbHelper = new SQLiteDbHelper(MyApplication.getInstance());
         mSqLiteDatabase = sqLiteDbHelper.getWritableDatabase();
     }
@@ -86,6 +90,9 @@ public class DBUtils {
         return isSuccess;
     }
 
+    /**
+     * 更新密码
+     */
     public boolean upSetPassword(ForgetPwd forgetPwd) {
         boolean isSuccess = false;
         Cursor cursor = null;
@@ -100,6 +107,61 @@ public class DBUtils {
                     isSuccess = true;
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return isSuccess;
+    }
+
+    /**
+     * 查询表单
+     */
+    public List<Bill> selectBill(String userId) {
+        Cursor cursor = null;
+        List<Bill> bills = new ArrayList<>();
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM BILL WHERE USER_ID = ? OR _ID =?", new String[]{userId, "1"});
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
+                String name = cursor.getString(cursor.getColumnIndex("BILL_NAME"));
+                if (!TextUtils.isEmpty(id)) {
+                    Bill bill = new Bill();
+                    bill.setBillName(name);
+                    bill.setId(id);
+                    bills.add(bill);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            bills = null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return bills;
+    }
+
+    /**
+     * 插入表单
+     */
+    public boolean insertBill(String userId, String billName) {
+        boolean isSuccess = false;
+        Cursor cursor = null;
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM BILL WHERE USER_ID = ? And BILL_NAME =?", new String[]{userId, billName});
+            if (cursor.moveToNext()) {
+                return false;
+            }
+            ContentValues cv = new ContentValues();
+            cv.put("BILL_NAME", billName);
+            cv.put("USER_ID", userId);
+            insert("BILL", cv);
+            isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

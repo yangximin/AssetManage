@@ -5,7 +5,7 @@ package com.yang.assetmanage.entity;
  * on 2019/5/28.
  */
 
-public class User {
+public class User extends BaseEntity{
 
     String name;
 
