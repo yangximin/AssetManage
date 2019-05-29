@@ -50,6 +50,8 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 "   USER_ID       INTEGER      NOT NULL,\n" +
                 "   BILL_NAME     TEXT     NOT NULL\n" +
                 ");");
+        //插入日常账本
+        db.execSQL("INSERT INTO BILL VALUES (1, 'NORMAL', '日常账本');");
 
     }
 

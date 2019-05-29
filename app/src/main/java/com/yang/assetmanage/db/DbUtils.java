@@ -51,17 +51,20 @@ public class DbUtils {
     /**
      * 登录
      */
-    public boolean login(String userName, String pwd) {
-        boolean isExist = false;
-        Cursor cursor = mSqLiteDatabase.rawQuery("SELECT USER_NAME FROM user WHERE USER_NAME = ? And PASSWORD =?", new String[]{userName, pwd});
+    public User login(String userName, String pwd) {
+        User user = null;
+        Cursor cursor = mSqLiteDatabase.rawQuery("SELECT * FROM user WHERE USER_NAME = ? And PASSWORD =?", new String[]{userName, pwd});
         if (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex("USER_NAME"));
             if (!TextUtils.isEmpty(name)) {
-                isExist = true;
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
+                user = new User();
+                user.setName(name);
+                user.setId(id);
             }
         }
         cursor.close();
-        return isExist;
+        return user;
     }
 
     /**

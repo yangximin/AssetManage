@@ -3,10 +3,14 @@ package com.yang.assetmanage.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -17,7 +21,7 @@ import com.yang.assetmanage.R;
  * on 2019/5/28.
  */
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
 
     private View mContentView;
@@ -41,8 +45,53 @@ public abstract class BaseActivity extends FragmentActivity {
 
     @Override
     public void setContentView(int layoutResID) {
-        mContentView = LayoutInflater.from(this).inflate(layoutResID, null);
+        if (layoutResID == 0) return;
+        // 初始化标题栏
+        if (isNeedTitle()) {
+            mContentView = getContentView(layoutResID);
+        } else {
+            mContentView = LayoutInflater.from(this).inflate(layoutResID, null);
+        }
         super.setContentView(mContentView);
+    }
+
+    private View getContentView(int layoutResID) {
+        //填充根布局
+        CoordinatorLayout rootView = (CoordinatorLayout) LayoutInflater.from(this).inflate(
+                R.layout.base_layout_main, null);
+        FrameLayout frameLayout = rootView.findViewById(R.id.base_layout_fl);
+        //初始化标题栏
+        initTitleBar(rootView);
+        //填充子布局
+        View contentView = View.inflate(this, layoutResID, null);
+        //把子布局添加到根布局中
+        frameLayout.addView(contentView);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //设置子布局在根布局中为标题栏垂直底下
+//        lp.addRule(RelativeLayout.BELOW, R.id.rel_title_bar);
+        contentView.setLayoutParams(lp);
+        return rootView;
+    }
+
+    private void initTitleBar(View rootView) {
+        Toolbar toolbar = rootView. findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        //标题栏根布局
+//        mTitleBar = rootView.findViewById(R.id.rel_title_bar);
+//        //返回
+//        mLeftBtn = rootView.findViewById(R.id.title_left_iv);
+//        //标题
+//        mTitleTv = rootView.findViewById(R.id.title_center_tv);
+//
+//        mLeftBtn.setOnClickListener(
+//                new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
     }
 
     /**
@@ -69,6 +118,10 @@ public abstract class BaseActivity extends FragmentActivity {
 
     }
 
+    protected boolean isNeedTitle() {
+        return true;
+    }
+
     /**
      * 初始化状态栏
      * ImmersionBar : https://github.com/gyf-dev/ImmersionBar
@@ -84,7 +137,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void statusBarDarkFont() {
         mImmersionBar
                 .statusBarDarkFont(true, 0.2f)
-                .statusBarColor(R.color.global_white_color)
+                .statusBarColor(R.color.component_blue_color)
                 .fitsSystemWindows(true)
                 .keyboardEnable(true)
                 .init();

@@ -13,6 +13,8 @@ public class User {
 
     String idCard;
 
+    String id;
+
     long registerDate;
 
     public String getName() {
@@ -45,5 +47,13 @@ public class User {
 
     public void setRegisterDate(long registerDate) {
         this.registerDate = registerDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
