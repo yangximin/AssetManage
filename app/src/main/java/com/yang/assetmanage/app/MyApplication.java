@@ -2,7 +2,7 @@ package com.yang.assetmanage.app;
 
 import android.app.Application;
 
-import com.yang.assetmanage.db.DbUtils;
+import com.yang.assetmanage.db.DBUtils;
 
 /**
  * Created by YXM
@@ -22,6 +22,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
-        DbUtils.getInstance();
+        DBUtils.getInstance();
     }
 }

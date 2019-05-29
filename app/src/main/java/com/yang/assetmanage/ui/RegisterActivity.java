@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.gyf.barlibrary.OnKeyboardListener;
 import com.yang.assetmanage.MainActivity;
 import com.yang.assetmanage.R;
-import com.yang.assetmanage.db.DbUtils;
+import com.yang.assetmanage.db.DBUtils;
 import com.yang.assetmanage.entity.User;
 import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.Regular;
@@ -104,8 +104,8 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void startRegister(String userName, String pwd, String idCard) {
-        DbUtils dbUtils = DbUtils.getInstance();
-        if (dbUtils.isExistUser(userName)) {
+        DBUtils DBUtils = DBUtils.getInstance();
+        if (DBUtils.isExistUser(userName)) {
             showMessage("该用户已注册，请直接登录");
             return;
         }
@@ -115,7 +115,7 @@ public class RegisterActivity extends BaseActivity {
         user.setPassword(pwd);
         user.setIdCard(idCard);
         user.setRegisterDate(System.currentTimeMillis());
-        boolean isSuccess = dbUtils.insertUser(user);
+        boolean isSuccess = DBUtils.insertUser(user);
         if (isSuccess) {
             toActivity(MainActivity.class);
         } else {

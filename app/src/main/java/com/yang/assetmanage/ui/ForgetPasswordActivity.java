@@ -6,7 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yang.assetmanage.R;
-import com.yang.assetmanage.db.DbUtils;
+import com.yang.assetmanage.db.DBUtils;
 import com.yang.assetmanage.entity.ForgetPwd;
 import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.Regular;
@@ -107,15 +107,15 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
     private void startUpDataPassword(ForgetPwd forgetPwd) {
-        DbUtils dbUtils = DbUtils.getInstance();
-        boolean isSuccess = dbUtils.upSetPassword(forgetPwd);
+        DBUtils DBUtils = DBUtils.getInstance();
+        boolean isSuccess = DBUtils.upSetPassword(forgetPwd);
         if (isSuccess){
             showMessage("修改密码成功");
             finish();
         }else {
             showMessage("修改密码失败，请确认信息是否正确");
         }
-//        dbUtils
+//        DBUtils
 
     }
 }

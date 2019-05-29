@@ -14,20 +14,20 @@ import com.yang.assetmanage.entity.User;
  * on 2019/5/28.
  */
 
-public class DbUtils {
+public class DBUtils {
 
     SQLiteDatabase mSqLiteDatabase;
 
-    public static DbUtils getInstance() {
+    public static DBUtils getInstance() {
         return SingleDbUtils.INSTANCE;
     }
 
     private static class SingleDbUtils {
 
-        private static final DbUtils INSTANCE = new DbUtils();
+        private static final DBUtils INSTANCE = new DBUtils();
     }
 
-    DbUtils() {
+    DBUtils() {
         SQLiteDbHelper sqLiteDbHelper = new SQLiteDbHelper(MyApplication.getInstance());
         mSqLiteDatabase = sqLiteDbHelper.getWritableDatabase();
     }
