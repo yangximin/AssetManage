@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_transparent_color"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/selection_translucent_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/global_white_color">
+
+        <TextView
+            android:id="@+id/selection_type_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择类型"
+            android:textColor="@color/global_gray"
+            android:textSize="@dimen/text_size_content" />
+
+        <ImageView
+            android:id="@+id/selection_close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:src="@drawable/zac_base_selection_close_icon" />
+    </RelativeLayout>
+
+    <com.yang.assetmanage.view.CommonTabLayout
+        android:id="@+id/selection_indicator_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/global_white_color"
+        android:minHeight="30dp"
+        app:tl_iconVisible="false"
+        app:tl_indicator_color="@color/global_red_button_color"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="40dp"
+        app:tl_tab_padding="100dp"
+        app:tl_textBold="BOTH"
+        app:tl_textSelectColor="@color/global_red_button_color"
+        app:tl_textUnselectColor="@color/global_title_color"
+        app:tl_textsize="@dimen/global_primary_size"
+        app:tl_underline_color="@color/global_stroke"
+        app:tl_underline_height="2dp" />
+
+    <FrameLayout
+        android:id="@+id/selection_content_fl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="@color/global_white_color">
+
+    </FrameLayout>
+</LinearLayout>

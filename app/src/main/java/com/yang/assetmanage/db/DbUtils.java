@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.entity.Bill;
+import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.ForgetPwd;
 import com.yang.assetmanage.entity.User;
 
@@ -146,6 +147,27 @@ public class DbUtils {
         return bills;
     }
 
+    public List<Dicts> getDictList(String type) {
+        Cursor cursor = null;
+        List<Dicts> dicts = new ArrayList<>();
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM DICT WHERE TYPE = ?", new String[]{type});
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
+                String name = cursor.getString(cursor.getColumnIndex("NAME"));
+                dicts.add(new Dicts(id, name));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            dicts = null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return dicts;
+    }
+
     /**
      * 插入表单
      */
@@ -179,11 +201,14 @@ public class DbUtils {
      * @param contentValues
      * @throws Exception
      */
-    private void insert(String table, ContentValues contentValues) throws Exception {
+    public void insert(String table, ContentValues contentValues) throws Exception {
         mSqLiteDatabase.beginTransaction();
         try {
             mSqLiteDatabase.insert(table, null, contentValues);
             mSqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("插入异常");
         } finally {
             mSqLiteDatabase.endTransaction();
         }

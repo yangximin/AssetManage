@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.OnKeyboardListener;
-import com.yang.assetmanage.MainActivity;
 import com.yang.assetmanage.R;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.User;

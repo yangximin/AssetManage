@@ -130,4 +130,6 @@
     <color name="common_line_color">#E8E1E1</color>
     <!-- 71,71,73 -->
     <color name="gesture_background">#474749</color>
+
+    <color name="homepage_tab_text_normal_grey">#ff827575</color>
 </resources>

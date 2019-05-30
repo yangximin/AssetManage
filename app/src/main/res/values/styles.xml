@@ -41,4 +41,19 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:maxLines">1</item>
     </style>
+    <!--填空透明style-->
+    <style name="ZacTransparentStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--没有标题-->
+        <item name="windowNoTitle">true</item>
+        <!--背景透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFrame">@null</item>
+        <!--背景：透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--  <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowActionBarOverlay">@null</item>
+    </style>
 </resources>

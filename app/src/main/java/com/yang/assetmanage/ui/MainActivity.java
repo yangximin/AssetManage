@@ -1,27 +1,22 @@
-package com.yang.assetmanage;
+package com.yang.assetmanage.ui;
 
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
+import com.yang.assetmanage.R;
 import com.yang.assetmanage.adapter.RVAdapter;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Bill;
 import com.yang.assetmanage.entity.User;
-import com.yang.assetmanage.ui.AddBillActivity;
-import com.yang.assetmanage.ui.BaseActivity;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.SPUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
@@ -34,7 +29,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_main_asset_layout;
     }
 
     @Override

@@ -10,6 +10,7 @@ package com.yang.assetmanage.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -86,6 +87,9 @@ public class SPUtil {
     public static Object getObjData(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         String objectVal = sharedPreferences.getString(key, null);
+        if (TextUtils.isEmpty(objectVal)) {
+            return null;
+        }
         byte[] buffer = Base64.decode(objectVal, Base64.DEFAULT);
         //一样通过读取字节流，创建字节流输入流，写入对象并作强制转换
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer);

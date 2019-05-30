@@ -37,12 +37,14 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 ");");
         //收支表
         db.execSQL("CREATE TABLE ASSET(\n" +
-                "   BILL_ID       INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+                "   _ID       INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+                "   BILL_ID       INTEGER       NOT NULL,\n" +
                 "   USER_ID       INTEGER      NOT NULL,\n" +
                 "   MONEY         TEXT     NOT NULL,\n" +
                 "   MONEY_TYPE    INT      NOT NULL,\n" +
                 "   CRETE_DATA    TEXT     NOT NULL,\n" +
-                "   MEMBER        TEXT     NOT NULL\n" +
+                "   MEMBER        TEXT     NOT NULL,\n" +
+                "   REMARK        TEXT     NOT NULL\n" +
                 ");");
         //账本表
         db.execSQL("CREATE TABLE BILL(\n" +
@@ -50,8 +52,31 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 "   USER_ID       INTEGER      NOT NULL,\n" +
                 "   BILL_NAME     TEXT     NOT NULL\n" +
                 ");");
+        //字典表
+        db.execSQL("CREATE TABLE DICT(\n" +
+                "   _ID           INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+                "   TYPE       INTEGER      NOT NULL,\n" +
+                "   NAME       TEXT      NOT NULL\n" +
+                ");");
         //插入日常账本
         db.execSQL("INSERT INTO BILL VALUES (1, 'NORMAL', '日常账本');");
+        //插入字典
+        db.execSQL("INSERT INTO DICT VALUES (0,1, '无成员')," +
+                "(1,1, '本人')," +
+                "(2,1, '老公')," +
+                "(3, 1,'老婆')," +
+                "(4,1, '子女')," +
+                "(5,1, '父母')," +
+                "(6,1, '父母');");
+        db.execSQL("INSERT INTO DICT VALUES (7, 2,'食品酒水')," +
+                "(8, 2,'衣服饰品')," +
+                "(9, 2,'行车交通')," +
+                "(10, 2,'居家物业')," +
+                "(11, 2,'交流通讯')," +
+                "(12, 2,'学习进修')," +
+                "(13, 2,'医疗保险')," +
+                "(14, 2,'金融保险')," +
+                "(15, 2,'其他');");
 
     }
 

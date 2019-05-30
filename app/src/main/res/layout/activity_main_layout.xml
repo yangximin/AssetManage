@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootFrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_white_color"
+    android:orientation="vertical">
+
+    <com.yang.assetmanage.view.CommonTabLayout
+        android:id="@+id/tabTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/base_gray_radius_bg"
+        android:gravity="center"
+        app:tl_iconVisible="false"
+        app:tl_indicator_bounce_enable="false"
+        app:tl_indicator_color="@color/global_red_button_color"
+        app:tl_indicator_style="BLOCK"
+        app:tl_textSelectColor="@color/global_white_color"
+        app:tl_textUnselectColor="@color/global_subtitle_color"
+        app:tl_textsize="14sp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ed_contacts_user_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
+</LinearLayout>

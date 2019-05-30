@@ -1,6 +1,311 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/expend_money_tv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="支出金额"
+            android:textColor="@color/global_black"
+            android:textSize="@dimen/text_size_content" />
+
+
+        <com.yang.assetmanage.view.MyEditTextView
+            android:id="@+id/expend_money_edt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/global_white_color"
+            android:ellipsize="end"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="@color/global_subtitle_color"
+            android:textCursorDrawable="@drawable/base_color_cursor_bg"
+            android:textSize="16sp"
+            app:my_edt_input_type="sms" />
+
+
+    </LinearLayout>
+
+
+    <include layout="@layout/item_line_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/expend_type_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_content_height"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/expend_type_tv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="支出类型"
+                android:textColor="@color/global_black"
+                android:textSize="@dimen/text_size_content" />
+
+            <TextView
+                android:id="@+id/expend_type_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/expend_type_tv"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingRight="22dp"
+                android:singleLine="true"
+                android:textColor="@color/component_black_color"
+                android:textColorHint="@color/global_subtitle_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/base_down_arrow_icon" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/item_line_layout" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/expend_bill_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_content_height"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/expend_bill_tv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="账本"
+                android:textColor="@color/global_black"
+                android:textSize="@dimen/text_size_content" />
+
+            <TextView
+                android:id="@+id/expend_bill_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/expend_bill_tv"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingRight="22dp"
+                android:singleLine="true"
+                android:textColor="@color/component_black_color"
+                android:textColorHint="@color/global_subtitle_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/base_down_arrow_icon" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/item_line_layout" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/expend_member_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_content_height"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/expend_member_tv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="成员"
+                android:textColor="@color/global_black"
+                android:textSize="@dimen/text_size_content" />
+
+            <TextView
+                android:id="@+id/expend_member_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/expend_member_tv"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingRight="22dp"
+                android:singleLine="true"
+                android:textColor="@color/component_black_color"
+                android:textColorHint="@color/global_subtitle_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/base_down_arrow_icon" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/item_line_layout" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/expend_date_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/form_content_height"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/expend_date_tv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="日期"
+                android:textColor="@color/global_black"
+                android:textSize="@dimen/text_size_content" />
+
+            <TextView
+                android:id="@+id/expend_date_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/expend_date_tv"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingRight="22dp"
+                android:singleLine="true"
+                android:textColor="@color/component_black_color"
+                android:textColorHint="@color/global_subtitle_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/base_down_arrow_icon" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/item_line_layout" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/expend_remark_tv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="备注"
+            android:textColor="@color/global_black"
+            android:textSize="@dimen/text_size_content" />
+
+
+        <com.yang.assetmanage.view.MyEditTextView
+            android:id="@+id/expend_remark_edt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/global_white_color"
+            android:ellipsize="end"
+            android:ems="10"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="@color/global_subtitle_color"
+            android:textCursorDrawable="@drawable/base_color_cursor_bg"
+            android:textSize="16sp"
+            app:my_edt_input_type="sms" />
+
+
+    </LinearLayout>
+
+
+    <include layout="@layout/item_line_layout" />
+
+    <TextView
+        android:id="@+id/login_button"
+        style="@style/RedBgBtn"
+        android:layout_marginTop="60dp"
+        android:text="@string/login_confirm" />
 
 </LinearLayout>

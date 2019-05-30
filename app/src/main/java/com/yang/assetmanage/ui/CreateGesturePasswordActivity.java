@@ -1,8 +1,6 @@
 package com.yang.assetmanage.ui;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,7 +8,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 
-import com.yang.assetmanage.MainActivity;
 import com.yang.assetmanage.R;
 import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.SPUtil;
@@ -18,7 +15,6 @@ import com.yang.assetmanage.view.LockPatternUtils;
 import com.yang.assetmanage.view.LockPatternView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

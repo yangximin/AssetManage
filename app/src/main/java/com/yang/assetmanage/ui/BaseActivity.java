@@ -37,7 +37,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         //添加子布局
         setContentView(getLayoutId());
         //初始化沉浸式
-        initImmersionBar();
+        if (isImmersionBarEnabled())
+            initImmersionBar();
         initView();
         initData();
 
@@ -93,7 +94,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                    }
 //                });
     }
-
+    /**
+     * 是否可以使用沉浸式
+     * Is immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    protected boolean isImmersionBarEnabled() {
+        return true;
+    }
     /**
      * 加载布局
      *
