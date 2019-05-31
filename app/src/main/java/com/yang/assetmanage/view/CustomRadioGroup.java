@@ -1,6 +1,7 @@
 package com.yang.assetmanage.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -248,13 +249,37 @@ public class CustomRadioGroup extends LinearLayout {
      * @param selectImageArrId  选中图片数组ID
      * */
     public void initItems(Context context,int textArrId,int imageArrId,int selectImageArrId){
-//        //获取底部栏文字数组
-//        String[] itemText = ApplicationGlobalUtils.getStringArrayFromResource(context, textArrId);
-//        //获取底部栏资源文件数组
-//        int[] itemImage = ApplicationGlobalUtils.getIntArrayFromResource(context,imageArrId);
-//        int[] itemCheckedImage = ApplicationGlobalUtils.getIntArrayFromResource(context,selectImageArrId);
-//        for (int i = 0; i < itemImage.length; i++) {
-//            addItem(itemImage[i],itemCheckedImage[i],itemText[i]);
-//        }
+        //获取底部栏文字数组
+        String[] itemText = getStringArrayFromResource(context, textArrId);
+        //获取底部栏资源文件数组
+        int[] itemImage = getIntArrayFromResource(context,imageArrId);
+        int[] itemCheckedImage = getIntArrayFromResource(context,selectImageArrId);
+        for (int i = 0; i < itemImage.length; i++) {
+            addItem(itemImage[i],itemCheckedImage[i],itemText[i]);
+        }
+    }
+
+    //读取资源文件数组
+    public static int[] getIntArrayFromResource(Context context, int resId) {
+
+        TypedArray typedArray = context.getResources().obtainTypedArray(resId);
+        int[] array = new int[typedArray.length()];
+        for (int i = 0; i < typedArray.length(); i++) {
+            array[i] = typedArray.getResourceId(i, 0);
+        }
+        return array;
+
+    }
+
+    //读取资源文件数组
+    public static String[] getStringArrayFromResource(Context context, int resId) {
+
+        TypedArray typedArray = context.getResources().obtainTypedArray(resId);
+        String[] array = new String[typedArray.length()];
+        for (int i = 0; i < typedArray.length(); i++) {
+            array[i] = typedArray.getString(i);
+        }
+        return array;
+
     }
 }

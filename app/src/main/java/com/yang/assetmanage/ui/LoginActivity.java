@@ -1,5 +1,6 @@
 package com.yang.assetmanage.ui;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.Regular;
 import com.yang.assetmanage.utils.SPUtil;
+
+import static com.yang.assetmanage.ui.CreateGesturePasswordActivity.KEY_IS_CREATE;
 
 /**
  * Created by YXM
@@ -111,7 +114,10 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
         User user = (User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
         if (user != null) {
-            toActivity(CreateGesturePasswordActivity.class);
+            Intent intent = new Intent(this,CreateGesturePasswordActivity.class);
+            intent.putExtra(KEY_IS_CREATE,false);
+            startActivity(intent);
+//            toActivity(CreateGesturePasswordActivity.class);
         }
     }
 }

@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.gyf.barlibrary.ImmersionBar;
 import com.yang.assetmanage.R;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by YXM
  * on 2019/5/28.
@@ -39,6 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //初始化沉浸式
         if (isImmersionBarEnabled())
             initImmersionBar();
+        EventBus.getDefault().register(this);
         initView();
         initData();
 
@@ -76,7 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initTitleBar(View rootView) {
-        Toolbar toolbar = rootView. findViewById(R.id.toolbar);
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         //标题栏根布局
 //        mTitleBar = rootView.findViewById(R.id.rel_title_bar);
@@ -94,6 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                    }
 //                });
     }
+
     /**
      * 是否可以使用沉浸式
      * Is immersion bar enabled boolean.
@@ -103,6 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean isImmersionBarEnabled() {
         return true;
     }
+
     /**
      * 加载布局
      *
@@ -120,7 +125,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract void initData();
 
-    protected void toActivity(Class<?> cls) {
+    public void toActivity(Class<?> cls) {
         Intent intent = new Intent();
         intent.setClass(this, cls);
         startActivity(intent);

@@ -1,11 +1,15 @@
 package com.yang.assetmanage.entity;
 
+import android.text.TextUtils;
+
+import com.yang.assetmanage.db.DbUtils;
+
 /**
  * Created by YXM
  * on 2019/5/28.
  */
 
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     String name;
 
@@ -50,6 +54,10 @@ public class User extends BaseEntity{
     }
 
     public String getId() {
+        if (TextUtils.isEmpty(id)) {
+            User user = DbUtils.getInstance().login(name, password);
+            return user.getId();
+        }
         return id;
     }
 

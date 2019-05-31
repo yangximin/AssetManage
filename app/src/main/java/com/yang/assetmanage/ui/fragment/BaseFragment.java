@@ -15,6 +15,10 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.yang.assetmanage.R;
 import com.yang.assetmanage.app.MyApplication;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * Created by yangximin on 2019/5/29.
  */
@@ -42,6 +46,7 @@ public abstract class BaseFragment extends Fragment {
             initImmersionBar();
         initView();
         initData();
+        EventBus.getDefault().register(this);
         return rootView;
     }
 
@@ -115,7 +120,16 @@ public abstract class BaseFragment extends Fragment {
         }
         mToast.show();
     }
+    /**
+     * 接收订阅的事件
+     * 子类实现该方法取值
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(Object event) {
 
+    }
     protected abstract int getLayoutId();
 
     protected abstract void initView();

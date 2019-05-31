@@ -4,8 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@color/global_red_button_color" />
+    <TextView
+        android:id="@+id/tv_foot"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/base_selector_btn_gray_radius"
+        android:text="添加"
+        android:textColor="@color/global_sub_black"
+        android:textSize="@dimen/text_size_content" />
+
 </LinearLayout>

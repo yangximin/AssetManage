@@ -138,4 +138,24 @@
 
     </declare-styleable>
 
+    <!--主页底部文字-->
+    <string-array name="main_tab_item_text">
+        <item>@string/main_tab_loan</item>
+        <item>@string/main_tab_find</item>
+        <item>@string/main_tab_mine</item>
+    </string-array>
+
+    <!--主页底部未选中图片-->
+    <integer-array name="main_tab_item_icon_unselect">
+        <item>@drawable/main_tab_icon_loan_unselect</item>
+        <item>@drawable/main_tab_icon_find_unselect</item>
+        <item>@drawable/main_tab_icon_mine_unselect</item>
+    </integer-array>
+
+    <!--主页底部选中图片-->
+    <integer-array name="main_tab_item_icon_select">
+        <item>@drawable/main_tab_icon_loan_select</item>
+        <item>@drawable/main_tab_icon_find_select</item>
+        <item>@drawable/main_tab_icon_mine_select</item>
+    </integer-array>
 </resources>

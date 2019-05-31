@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--按钮效果-->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle" >
+            <solid android:color="#ffffff" />
+            <corners android:radius="120px"/>
+            <stroke
+                android:width="1dp"
+                android:color="@color/global_sub_black"/>
+        </shape>
+    </item>
+
+    <!--不可点击-->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle" >
+            <solid android:color="#ffffff" />
+            <corners android:radius="120px"/>
+            <stroke
+                android:width="1dp"
+                android:color="@color/global_sub_black"/>
+        </shape>
+    </item>
+
+    <!--正常状态-->
+    <item>
+        <shape android:shape="rectangle" >
+            <solid android:color="#ffffff" />
+            <corners android:radius="120px"/>
+            <stroke
+                android:width="1dp"
+                android:color="@color/global_sub_black"/>
+        </shape>
+    </item>
+</selector>
