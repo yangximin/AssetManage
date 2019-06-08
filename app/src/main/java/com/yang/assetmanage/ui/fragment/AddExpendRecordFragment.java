@@ -139,15 +139,17 @@ public class AddExpendRecordFragment extends BaseFragment {
          ");");
          */
         ContentValues cv = new ContentValues();
-        cv.put("BILL_ID",mBillDict.getId());
-        cv.put("USER_ID","1");
-        cv.put("MONEY",money);
-        cv.put("MONEY_TYPE",mTypeDict.getId());
-        cv.put("CRETE_DATA",mDateBtn.getText().toString());
-        cv.put("MEMBER",mMemberDict.getId());
-        cv.put("REMARK",mRemarkEdt.getText()==null?"":mRemarkEdt.getText().toString());
+        cv.put("BILL_ID", mBillDict.getId());
+        cv.put("USER_ID", "1");
+        cv.put("MONEY", money);
+        cv.put("MONEY_TYPE", mTypeDict.getId());
+        cv.put("CRETE_DATA", mDateBtn.getText().toString());
+        cv.put("MEMBER", mMemberDict.getId());
+        cv.put("REMARK", mRemarkEdt.getText() == null ? "" : mRemarkEdt.getText().toString());
         try {
-            DbUtils.getInstance().insert("ASSET",cv);
+            DbUtils.getInstance().insert("ASSET", cv);
+            showMessage("新增记录成功");
+            getActivity().finish();
         } catch (Exception e) {
             e.printStackTrace();
             showMessage("数据异常，请重试");

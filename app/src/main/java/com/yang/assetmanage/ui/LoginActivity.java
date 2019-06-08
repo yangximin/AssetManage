@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
         if (user != null) {
             Intent intent = new Intent(this,CreateGesturePasswordActivity.class);
             intent.putExtra(KEY_IS_CREATE,false);
-            startActivity(intent);
+//            startActivity(intent);
 //            toActivity(CreateGesturePasswordActivity.class);
         }
     }

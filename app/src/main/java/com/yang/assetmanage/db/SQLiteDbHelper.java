@@ -24,9 +24,6 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        // 在这里通过 db.execSQL 函数执行 SQL 语句创建所需要的表
-        // 创建 students 表
         //用户表
         db.execSQL("CREATE TABLE USER(\n" +
                 "   _ID           INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
@@ -68,7 +65,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 "(4,1, '子女')," +
                 "(5,1, '父母')," +
                 "(6,1, '父母');");
-        db.execSQL("INSERT INTO DICT VALUES (7, 2,'食品酒水')," +
+        db.execSQL("INSERT INTO DICT VALUES (7, 2,'零食')," +
                 "(8, 2,'衣服饰品')," +
                 "(9, 2,'行车交通')," +
                 "(10, 2,'居家物业')," +

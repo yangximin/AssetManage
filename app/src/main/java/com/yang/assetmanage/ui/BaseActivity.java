@@ -17,6 +17,8 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.yang.assetmanage.R;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by YXM
@@ -187,5 +189,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             mToast.setText(message);
         }
         mToast.show();
+    }
+
+    /**
+     * 接收订阅的事件
+     * 子类实现该方法取值
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(Object event) {
+
     }
 }

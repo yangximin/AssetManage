@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.yang.assetmanage.app.MyApplication;
+import com.yang.assetmanage.entity.Asset;
 import com.yang.assetmanage.entity.Bill;
 import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.ForgetPwd;
@@ -146,6 +147,65 @@ public class DbUtils {
         }
         return bills;
     }
+/**
+ *   "   BILL_ID       INTEGER       NOT NULL,\n" +
+ "   USER_ID       INTEGER      NOT NULL,\n" +
+ "   MONEY         TEXT     NOT NULL,\n" +
+ "   MONEY_TYPE    INT      NOT NULL,\n" +
+ "   CRETE_DATA    TEXT     NOT NULL,\n" +
+ "   MEMBER        TEXT     NOT NULL,\n" +
+ "   REMARK        TEXT     NOT NULL\n" +
+ */
+    /**
+     * @param billId
+     * @return
+     */
+    public List<Asset> getAssetList(String billId) {
+        Cursor cursor = null;
+        List<Asset> assets = new ArrayList<>();
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE BILL_ID = ?", new String[]{billId});
+            while (cursor.moveToNext()) {
+                String money = cursor.getString(cursor.getColumnIndex("MONEY"));
+                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
+                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
+                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
+                Asset asset = new Asset();
+                asset.setMoney(money+"元");
+                asset.setMoneyName(getDictName(type));
+                asset.setCreteData(date);
+                asset.setMemberName(getDictName(member));
+                asset.setRemark(remark);
+                assets.add(asset);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return assets;
+    }
+
+    public String getDictName(String id) {
+        String name = null;
+        Cursor cursor = null;
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM DICT WHERE _ID = ?", new String[]{id});
+            while (cursor.moveToNext()) {
+                name = cursor.getString(cursor.getColumnIndex("NAME"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return name;
+    }
 
     public List<Dicts> getDictList(String type) {
         Cursor cursor = null;
@@ -193,6 +253,7 @@ public class DbUtils {
         }
         return isSuccess;
     }
+
 
     /**
      * 插入数据

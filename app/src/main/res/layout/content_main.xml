@@ -8,10 +8,48 @@
     tools:context="com.yang.assetmanage.ui.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/asset_add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:src="@drawable/icon_bank_hxbk_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="记一笔"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:padding="50dp"
+                android:textColor="@color/global_white"
+                android:textSize="@dimen/title_icon_size" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/global_primary_size"
+                android:textColor="@color/global_white"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="25dp"
+                android:text="日常账本"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/asset_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
