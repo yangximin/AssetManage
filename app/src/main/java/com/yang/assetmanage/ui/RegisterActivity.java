@@ -118,7 +118,7 @@ public class RegisterActivity extends BaseActivity {
         boolean isSuccess = DbUtils.insertUser(user);
         if (isSuccess) {
             SPUtil.saveObjData(this, Constants.Sp.SP_KEY_USER_INFO,user);
-            toActivity(CreateGesturePasswordActivity.class);
+            toActivity(GesturePasswordActivity.class);
         } else {
             showMessage("注册失败，请重新注册");
         }

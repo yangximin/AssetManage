@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author hanli
  */
-public class CreateGesturePasswordActivity extends BaseActivity {
+public class GesturePasswordActivity extends BaseActivity {
 
     private LockPatternView mLockPatternView;
 
@@ -62,11 +62,6 @@ public class CreateGesturePasswordActivity extends BaseActivity {
         ((TextView) findViewById(R.id.gesturepwd_forget)).setVisibility(View.GONE);
         ((TextView) findViewById(R.id.gesturepwd_tip)).setVisibility(View.VISIBLE);
         isCrete = getIntent().getBooleanExtra(KEY_IS_CREATE, true);
-        //Token token = (Token) AhwApp.getInstance().get(Constants.App.TOKEN);
-//        String userName = AhwConfig.getUsername(this);
-//        if (!TextUtils.isEmpty(userName)) {
-//            mUserTextView.setText(userName);
-//        }
         initPreviewViews();
     }
 
@@ -75,15 +70,6 @@ public class CreateGesturePasswordActivity extends BaseActivity {
 
     }
 
-    // @Override
-    // protected void onSaveInstanceState(Bundle outState) {
-    // super.onSaveInstanceState(outState);
-    // outState.putInt(KEY_UI_STAGE, mUiStage.ordinal());
-    // if (mChosenPattern != null) {
-    // outState.putString(KEY_PATTERN_CHOICE,
-    // LockPatternUtils.patternToString(mChosenPattern));
-    // }
-    // }
 
     private void initPreviewViews() {
         mPreviewViews = new View[3][3];

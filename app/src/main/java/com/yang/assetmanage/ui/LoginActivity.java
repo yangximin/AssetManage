@@ -15,7 +15,7 @@ import com.yang.assetmanage.utils.EncryptUtil;
 import com.yang.assetmanage.utils.Regular;
 import com.yang.assetmanage.utils.SPUtil;
 
-import static com.yang.assetmanage.ui.CreateGesturePasswordActivity.KEY_IS_CREATE;
+import static com.yang.assetmanage.ui.GesturePasswordActivity.KEY_IS_CREATE;
 
 /**
  * Created by YXM
@@ -103,7 +103,7 @@ public class LoginActivity extends BaseActivity {
         DbUtils DbUtils = com.yang.assetmanage.db.DbUtils.getInstance();
         User user = DbUtils.login(userName, pwd);
         if (user != null) {
-            toActivity(CreateGesturePasswordActivity.class);
+            toActivity(GesturePasswordActivity.class);
             SPUtil.saveObjData(this, Constants.Sp.SP_KEY_USER_INFO, user);
         } else {
             showMessage("用户名密码错误，请重新登录");
@@ -114,10 +114,10 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
         User user = (User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
         if (user != null) {
-            Intent intent = new Intent(this,CreateGesturePasswordActivity.class);
+            Intent intent = new Intent(this,GesturePasswordActivity.class);
             intent.putExtra(KEY_IS_CREATE,false);
 //            startActivity(intent);
-//            toActivity(CreateGesturePasswordActivity.class);
+//            toActivity(GesturePasswordActivity.class);
         }
     }
 }

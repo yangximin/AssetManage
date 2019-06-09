@@ -140,7 +140,7 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 //        }
 
         String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
-        List<Asset> assets = DbUtils.getInstance().getAssetList(billId);
+        List<Asset> assets = DbUtils.getInstance().getAssetReportList(billId,null);
         for (int i = 0; i < assets.size(); i++) {
             Asset asset = assets.get(i);
             entries.add(new PieEntry(Float.parseFloat(asset.getMoney()), asset.getMoneyName()));

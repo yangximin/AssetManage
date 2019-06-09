@@ -36,7 +36,7 @@
             android:name=".ui.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.CreateGesturePasswordActivity"
+            android:name=".ui.GesturePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AddBillActivity"

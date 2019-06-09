@@ -192,6 +192,52 @@ public class DbUtils {
         return assets;
     }
 
+    /**
+     *   "   BILL_ID       INTEGER       NOT NULL,\n" +
+     "   USER_ID       INTEGER      NOT NULL,\n" +
+     "   MONEY         TEXT     NOT NULL,\n" +
+     "   MONEY_TYPE    INT      NOT NULL,\n" +
+     "   CRETE_DATA    TEXT     NOT NULL,\n" +
+     "   MEMBER        TEXT     NOT NULL,\n" +
+     "   REMARK        TEXT     NOT NULL\n" +
+     */
+    /**
+     * @param billId
+     * @return
+     */
+    public List<Asset> getAssetReportList(String billId,String data) {
+        Cursor cursor = null;
+        List<Asset> assets = new ArrayList<>();
+        if (TextUtils.isEmpty(billId)){
+            billId = "1";
+        }
+        try {
+            //SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC; GROUP BY MONEY_TYPE ORDER BY MONEY_TYPE
+            cursor = mSqLiteDatabase.rawQuery("SELECT SUM(MONEY) as MONEY,MONEY_TYPE  FROM ASSET WHERE BILL_ID = ? GROUP BY MONEY_TYPE ORDER BY MONEY_TYPE ", new String[]{billId});
+            while (cursor.moveToNext()) {
+                String money = cursor.getString(cursor.getColumnIndex("MONEY"));
+                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+//                String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
+//                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
+//                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
+                Asset asset = new Asset();
+                asset.setMoney(money);
+                asset.setMoneyName(getDictName(type));
+//                asset.setCreteData(date);
+//                asset.setMemberName(getDictName(member));
+//                asset.setRemark(remark);
+                assets.add(asset);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return assets;
+    }
+
     public String getDictName(String id) {
         String name = null;
         Cursor cursor = null;
