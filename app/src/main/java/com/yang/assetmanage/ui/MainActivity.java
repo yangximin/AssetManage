@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         //从资源文件加载title数组，为了页面滑动时，动态改变顶部title
         mTabItemTitles = getStringArrayFromResource(this, R.array.main_tab_item_text);
         listFragment = new ArrayList<>();
-        listFragment.add(new AssetFragment());
+        listFragment.add(new PiePolylineChartFragment());
         listFragment.add(new AssetFragment());
         listFragment.add(new AssetFragment());
         mViewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), listFragment, mTabItemTitles));

@@ -163,6 +163,9 @@ public class DbUtils {
     public List<Asset> getAssetList(String billId) {
         Cursor cursor = null;
         List<Asset> assets = new ArrayList<>();
+        if (TextUtils.isEmpty(billId)){
+            billId = "1";
+        }
         try {
             cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE BILL_ID = ?", new String[]{billId});
             while (cursor.moveToNext()) {
@@ -172,7 +175,7 @@ public class DbUtils {
                 String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
                 String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
-                asset.setMoney(money+"元");
+                asset.setMoney(money);
                 asset.setMoneyName(getDictName(type));
                 asset.setCreteData(date);
                 asset.setMemberName(getDictName(member));

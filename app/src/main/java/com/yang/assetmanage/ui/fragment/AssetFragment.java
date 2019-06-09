@@ -75,7 +75,7 @@ public class AssetFragment extends BaseFragment {
         if (TextUtils.isEmpty(billId)) {
             billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
         }
-        List<Asset> assets = DbUtils.getInstance().getAssetList(TextUtils.isEmpty(billId) ? "1" : billId);
+        List<Asset> assets = DbUtils.getInstance().getAssetList(billId);
         mAssetAdapter.clear();
         mAssetAdapter.addAll(assets);
     }
@@ -117,7 +117,7 @@ public class AssetFragment extends BaseFragment {
     private void itemAssetConvert(RVAdapter.ViewHolder vH, Asset item, int position) {
         vH.setText(R.id.asset_main_type_tv, item.getMoneyName());
         vH.setText(R.id.asset_main_date_tv, item.getCreteData());
-        vH.setText(R.id.asset_main_money_edt, item.getMoney());
+        vH.setText(R.id.asset_main_money_edt, item.getMoney()+"元");
     }
 
     private void itemBillConvert(RVAdapter.ViewHolder vH, Bill bill, int position) {

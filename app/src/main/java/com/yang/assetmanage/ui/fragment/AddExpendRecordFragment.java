@@ -13,7 +13,10 @@ import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.SelectionDate;
 import com.yang.assetmanage.ui.BaseActivity;
 import com.yang.assetmanage.ui.SelectionDialogActivity;
+import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.GenerateDateUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -149,6 +152,7 @@ public class AddExpendRecordFragment extends BaseFragment {
         try {
             DbUtils.getInstance().insert("ASSET", cv);
             showMessage("新增记录成功");
+            EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
             getActivity().finish();
         } catch (Exception e) {
             e.printStackTrace();
