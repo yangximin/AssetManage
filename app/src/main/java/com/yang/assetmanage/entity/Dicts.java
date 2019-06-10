@@ -11,6 +11,10 @@ public class Dicts extends BaseEntity {
 
     private String name;
 
+    private String type;
+    public Dicts() {
+    }
+
     public Dicts(String id, String name) {
         this.id = id;
         this.name = name;
@@ -36,5 +40,13 @@ public class Dicts extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

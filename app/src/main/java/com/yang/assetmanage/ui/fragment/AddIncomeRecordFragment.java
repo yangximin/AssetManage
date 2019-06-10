@@ -8,12 +8,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yang.assetmanage.R;
+import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.SelectionDate;
+import com.yang.assetmanage.entity.User;
 import com.yang.assetmanage.ui.BaseActivity;
 import com.yang.assetmanage.ui.SelectionDialogActivity;
+import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.GenerateDateUtils;
+import com.yang.assetmanage.utils.SPUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,6 +72,8 @@ public class AddIncomeRecordFragment extends BaseFragment {
      */
     private final static int TYPE_MEMBER = 4;
 
+    User mUser;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_expend_record_layout;
@@ -88,7 +96,7 @@ public class AddIncomeRecordFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mClickType = TYPE_CLASSIFY;
-                toSelectActivity(GenerateDateUtils.getInstance().getExpendType());
+                toSelectActivity(GenerateDateUtils.getInstance().getIncomeType());
             }
         });
         mBillBtn.setOnClickListener(new View.OnClickListener() {
@@ -139,15 +147,18 @@ public class AddIncomeRecordFragment extends BaseFragment {
          ");");
          */
         ContentValues cv = new ContentValues();
-        cv.put("BILL_ID",mBillDict.getId());
-        cv.put("USER_ID","1");
-        cv.put("MONEY",money);
-        cv.put("MONEY_TYPE",mTypeDict.getId());
-        cv.put("CRETE_DATA",mDateBtn.getText().toString());
-        cv.put("MEMBER",mMemberDict.getId());
-        cv.put("REMARK",mRemarkEdt.getText()==null?"":mRemarkEdt.getText().toString());
+        cv.put("BILL_ID", mBillDict.getId());
+        cv.put("USER_ID", mUser.getId());
+        cv.put("MONEY", money);
+        cv.put("MONEY_TYPE", mTypeDict.getId());
+        cv.put("CRETE_DATA", mDateBtn.getText().toString());
+        cv.put("MEMBER", mMemberDict.getId());
+        cv.put("REMARK", mRemarkEdt.getText() == null ? "" : mRemarkEdt.getText().toString());
         try {
-            DbUtils.getInstance().insert("ASSET",cv);
+            DbUtils.getInstance().insert("ASSET", cv);
+            showMessage("新增记录成功");
+            EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
+            getActivity().finish();
         } catch (Exception e) {
             e.printStackTrace();
             showMessage("数据异常，请重试");
@@ -176,6 +187,8 @@ public class AddIncomeRecordFragment extends BaseFragment {
         mTypeBtn.setText(mTypeDict.getName());
         mBillBtn.setText(mBillDict.getName());
         mMemberBtn.setText(mMemberDict.getName());
+        mUser = (com.yang.assetmanage.entity.User) SPUtil.getObjData(MyApplication.getInstance(), Constants.Sp.SP_KEY_USER_INFO);
+
     }
 
     @Override

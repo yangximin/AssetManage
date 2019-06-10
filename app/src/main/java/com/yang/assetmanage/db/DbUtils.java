@@ -176,9 +176,11 @@ public class DbUtils {
                 String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
                 asset.setMoney(money);
-                asset.setMoneyName(getDictName(type));
+                Dicts typeDic = getDictName(type);
+                asset.setMoneyName(typeDic.getName());
+                asset.setMoneyType(typeDic.getType());
                 asset.setCreteData(date);
-                asset.setMemberName(getDictName(member));
+                asset.setMemberName(getDictName(member).getName());
                 asset.setRemark(remark);
                 assets.add(asset);
             }
@@ -222,7 +224,7 @@ public class DbUtils {
 //                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
                 asset.setMoney(money);
-                asset.setMoneyName(getDictName(type));
+                asset.setMoneyName(getDictName(type).getName());
 //                asset.setCreteData(date);
 //                asset.setMemberName(getDictName(member));
 //                asset.setRemark(remark);
@@ -238,13 +240,15 @@ public class DbUtils {
         return assets;
     }
 
-    public String getDictName(String id) {
-        String name = null;
+    public Dicts getDictName(String id) {
+        Dicts dict = null;
         Cursor cursor = null;
         try {
             cursor = mSqLiteDatabase.rawQuery("SELECT * FROM DICT WHERE _ID = ?", new String[]{id});
             while (cursor.moveToNext()) {
-                name = cursor.getString(cursor.getColumnIndex("NAME"));
+                dict = new Dicts();
+                dict.setName(cursor.getString(cursor.getColumnIndex("NAME")));
+                dict.setType(cursor.getString(cursor.getColumnIndex("TYPE")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,7 +257,7 @@ public class DbUtils {
                 cursor.close();
             }
         }
-        return name;
+        return dict;
     }
 
     public List<Dicts> getDictList(String type) {

@@ -114,10 +114,10 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
         User user = (User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
         if (user != null) {
-            Intent intent = new Intent(this,GesturePasswordActivity.class);
-            intent.putExtra(KEY_IS_CREATE,false);
+            Intent intent = new Intent(this, GesturePasswordActivity.class);
+            intent.putExtra(KEY_IS_CREATE, false);
 //            startActivity(intent);
-//            toActivity(GesturePasswordActivity.class);
+            toActivity(MainActivity.class);
         }
     }
 }

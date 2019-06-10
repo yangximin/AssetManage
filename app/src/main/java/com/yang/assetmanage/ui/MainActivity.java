@@ -12,6 +12,7 @@ import com.yang.assetmanage.adapter.TabPagerAdapter;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Bill;
 import com.yang.assetmanage.ui.fragment.AssetFragment;
+import com.yang.assetmanage.ui.fragment.PiePolylineChartFragment;
 import com.yang.assetmanage.view.CustomRadioGroup;
 
 import java.util.ArrayList;

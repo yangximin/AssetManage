@@ -117,7 +117,15 @@ public class AssetFragment extends BaseFragment {
     private void itemAssetConvert(RVAdapter.ViewHolder vH, Asset item, int position) {
         vH.setText(R.id.asset_main_type_tv, item.getMoneyName());
         vH.setText(R.id.asset_main_date_tv, item.getCreteData());
-        vH.setText(R.id.asset_main_money_edt, item.getMoney()+"元");
+        TextView money = vH.getView(R.id.asset_main_money_edt);
+        // 支出
+        if (TextUtils.equals(Constants.Normal.ASSET_TYPE_EXPEND, item.getMoneyType())) {
+            money.setTextColor(mContext.getResources().getColor(R.color.global_red_button_color));
+            vH.setText(R.id.asset_main_money_edt, "-" + item.getMoney() + "元");
+        } else {
+            money.setTextColor(mContext.getResources().getColor(R.color.global_green_color));
+            vH.setText(R.id.asset_main_money_edt, "+" + item.getMoney() + "元");
+        }
     }
 
     private void itemBillConvert(RVAdapter.ViewHolder vH, Bill bill, int position) {

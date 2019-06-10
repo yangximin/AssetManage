@@ -8,13 +8,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yang.assetmanage.R;
+import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.SelectionDate;
+import com.yang.assetmanage.entity.User;
 import com.yang.assetmanage.ui.BaseActivity;
 import com.yang.assetmanage.ui.SelectionDialogActivity;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.GenerateDateUtils;
+import com.yang.assetmanage.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,6 +71,7 @@ public class AddExpendRecordFragment extends BaseFragment {
      * 成员类型
      */
     private final static int TYPE_MEMBER = 4;
+    private User mUser;
 
     @Override
     protected int getLayoutId() {
@@ -143,7 +147,7 @@ public class AddExpendRecordFragment extends BaseFragment {
          */
         ContentValues cv = new ContentValues();
         cv.put("BILL_ID", mBillDict.getId());
-        cv.put("USER_ID", "1");
+        cv.put("USER_ID", mUser.getId());
         cv.put("MONEY", money);
         cv.put("MONEY_TYPE", mTypeDict.getId());
         cv.put("CRETE_DATA", mDateBtn.getText().toString());
@@ -182,6 +186,7 @@ public class AddExpendRecordFragment extends BaseFragment {
         mTypeBtn.setText(mTypeDict.getName());
         mBillBtn.setText(mBillDict.getName());
         mMemberBtn.setText(mMemberDict.getName());
+        mUser = (com.yang.assetmanage.entity.User) SPUtil.getObjData(MyApplication.getInstance(), Constants.Sp.SP_KEY_USER_INFO);
     }
 
     @Override

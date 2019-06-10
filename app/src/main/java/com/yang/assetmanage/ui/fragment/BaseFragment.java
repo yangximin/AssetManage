@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public abstract class BaseFragment extends Fragment {
 
-    private Context mContext;
+    Context mContext;
 
     protected View rootView;
 
@@ -120,6 +120,7 @@ public abstract class BaseFragment extends Fragment {
         }
         mToast.show();
     }
+
     /**
      * 接收订阅的事件
      * 子类实现该方法取值
@@ -130,6 +131,7 @@ public abstract class BaseFragment extends Fragment {
     public void onBaseEvent(Object event) {
 
     }
+
     protected abstract int getLayoutId();
 
     protected abstract void initView();

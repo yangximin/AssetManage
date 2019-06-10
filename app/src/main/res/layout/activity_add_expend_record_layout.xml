@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:maxLines="1"
-            android:text="支出金额"
+            android:text="收入金额"
             android:textColor="@color/global_black"
             android:textSize="@dimen/text_size_content" />
 
@@ -69,7 +69,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="支出类型"
+                android:text="收入类型"
                 android:textColor="@color/global_black"
                 android:textSize="@dimen/text_size_content" />
 

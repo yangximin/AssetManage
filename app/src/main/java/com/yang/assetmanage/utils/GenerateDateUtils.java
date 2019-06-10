@@ -151,6 +151,9 @@ public class GenerateDateUtils {
     public List<Dicts> getExpendType() {
         return DbUtils.getInstance().getDictList("2");
     }
+    public List<Dicts> getIncomeType() {
+        return DbUtils.getInstance().getDictList("3");
+    }
 
     public List<Dicts> getBillList() {
         List<Dicts> dicts = new ArrayList<>();

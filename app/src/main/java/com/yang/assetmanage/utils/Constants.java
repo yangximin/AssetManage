@@ -7,6 +7,13 @@ package com.yang.assetmanage.utils;
 
 public class Constants {
 
+    public interface Normal{
+        /**
+         * 支出类型
+         */
+        String ASSET_TYPE_EXPEND = "2";
+    }
+
     public interface Sp {
         String SP_KEY_USER_INFO = "sp_key_user_info";
         String SP_KEY_BILL_ID = "sp_key_bill_id";

@@ -1,27 +1,20 @@
 
-package com.yang.assetmanage.ui;
+package com.yang.assetmanage.ui.fragment;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -32,16 +25,15 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.yang.assetmanage.R;
+import com.yang.assetmanage.adapter.RVAdapter;
 import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Asset;
-import com.yang.assetmanage.entity.Bill;
-import com.yang.assetmanage.ui.fragment.BaseFragment;
 import com.yang.assetmanage.utils.Constants;
+import com.yang.assetmanage.utils.DensityUtil;
 import com.yang.assetmanage.utils.SPUtil;
 
 import java.util.ArrayList;
@@ -56,6 +48,12 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
     private LinearLayout mDataLl;
 
+    private RecyclerView mRecyclerView;
+
+    private RVAdapter<Asset> mAssetAdapter;
+
+    RadioGroup mRadioGroup;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fg_report_layout;
@@ -63,31 +61,21 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
     @Override
     protected void initView() {
-
         chart = findViewById(R.id.chart1);
         mDataLl = findViewById(R.id.report_ll);
+        mRecyclerView = findViewById(R.id.asset_rv);
+        mRadioGroup = findViewById(R.id.report_rg);
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(5, 10, 5, 5);
-
         chart.setDragDecelerationFrictionCoef(0.95f);
-
-//        tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-//
-//        chart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf"));
-        chart.setCenterText(generateCenterSpannableText());
-
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
-
         chart.setDrawHoleEnabled(true);
         chart.setHoleColor(Color.WHITE);
-
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);
-
         chart.setHoleRadius(58f);
         chart.setTransparentCircleRadius(61f);
-
         chart.setDrawCenterText(true);
 
         chart.setRotationAngle(0);
@@ -95,27 +83,50 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
 
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
-
-        // add a selection listener
         chart.setOnChartValueSelectedListener(this);
-
         chart.animateY(1400, Easing.EaseInOutQuad);
-        // chart.spin(2000, 0, 360);
-
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
         l.setEnabled(false);
+        initRcy();
+        initSelector();
         mDataLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initData();
             }
         });
+    }
+
+    private void initSelector() {
+        for (int i = 0; i <= 12; i++) {
+            RadioButton radioButton = new RadioButton(mContext);
+            radioButton.setText(i+"月");
+            mRadioGroup.addView(radioButton);
+        }
+    }
+
+    private void initRcy() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mAssetAdapter = new RVAdapter<Asset>(getActivity(), R.layout.item_asset_layout) {
+            @Override
+            protected void convert(ViewHolder vH, Asset item, int position) {
+                itemAssetConvert(vH, item, position);
+            }
+        };
+        mRecyclerView.setAdapter(mAssetAdapter);
+    }
+
+    private void itemAssetConvert(RVAdapter.ViewHolder vH, Asset item, int position) {
+        View view = vH.getView(R.id.asset_main_date_rl);
+        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(mContext, 40)));
+        vH.setText(R.id.asset_main_type_tv, item.getMoneyName());
+//        vH.setText(R.id.asset_main_date_tv, item.getCreteData());
+        vH.setVisibility(R.id.asset_main_date_tv, View.GONE);
+        vH.setText(R.id.asset_main_money_edt, "共" + item.getMoney() + "元");
     }
 
     @Override
@@ -133,14 +144,8 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-//        for (int i = 0; i < count; i++) {
-//            entries.add(new PieEntry(100f, "A"));
-//        }
-
         String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
-        List<Asset> assets = DbUtils.getInstance().getAssetReportList(billId,null);
+        List<Asset> assets = DbUtils.getInstance().getAssetReportList(billId, null);
         for (int i = 0; i < assets.size(); i++) {
             Asset asset = assets.get(i);
             entries.add(new PieEntry(Float.parseFloat(asset.getMoney()), asset.getMoneyName()));
@@ -194,6 +199,8 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         chart.highlightValues(null);
 
         chart.invalidate();
+        mAssetAdapter.clear();
+        mAssetAdapter.addAll(assets);
     }
 
     private SpannableString generateCenterSpannableText() {
@@ -217,8 +224,10 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
                 "Value: " + e.getY() + ", xIndex: " + e.getX()
                         + ", DataSet index: " + h.getDataSetIndex());
     }
+
     @Override
-    public void onBaseEvent(Object event) { if (event instanceof String) {
+    public void onBaseEvent(Object event) {
+        if (event instanceof String) {
             String ev = (String) event;
             if (TextUtils.equals(Constants.Event.EVENT_ADD_ASSET_SUCCESS, ev)) {
                 initData();

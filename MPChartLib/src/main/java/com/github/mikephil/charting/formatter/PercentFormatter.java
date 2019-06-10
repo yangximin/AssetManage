@@ -47,7 +47,7 @@ public class PercentFormatter extends ValueFormatter
             return getFormattedValue(value);
         } else {
             // raw value, skip percent sign
-            return mFormat.format(value);
+            return mFormat.format(value)+"%";
         }
     }
 
