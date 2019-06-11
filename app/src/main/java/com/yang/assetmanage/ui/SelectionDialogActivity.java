@@ -13,8 +13,9 @@ import com.yang.assetmanage.R;
 import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.TabEntity;
 import com.yang.assetmanage.ui.fragment.SelectionFragment;
-import com.yang.assetmanage.utils.GenerateDateUtils;
+import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.FragmentTableBar;
+import com.yang.assetmanage.utils.GenerateDateUtils;
 import com.yang.assetmanage.view.CommonTabLayout;
 import com.yang.assetmanage.view.CustomTabEntity;
 import com.yang.assetmanage.view.OnTabSelectListener;
@@ -105,10 +106,10 @@ public class SelectionDialogActivity extends BaseActivity {
     @Override
     protected void initView() {
         initSystemBar();
-        mNeedMoreYear = true;
         String typeName = getIntent().getStringExtra(TYPE_NAME_TITLE);
         mIsNeedDayForMonth = true;
         mAddressType = getIntent().getStringExtra(SELECTION_TYPE_ADDRESS);
+        mNeedMoreYear = getIntent().getBooleanExtra(Constants.Normal.TYPE_SELECT_YEAR_MONTH, true);
         mTranslucentView = findViewById(R.id.selection_translucent_view);
         mCloseIv = findViewById(R.id.selection_close_iv);
         mTypeNameTv = findViewById(R.id.selection_type_name_tv);

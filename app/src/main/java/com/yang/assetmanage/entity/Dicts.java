@@ -20,11 +20,11 @@ public class Dicts extends BaseEntity {
         this.name = name;
     }
 
-    public Dicts(int id, String name) {
-        this.id = id + "";
+    public Dicts(String id, String name, String type) {
+        this.id = id;
         this.name = name;
+        this.type = type;
     }
-
 
     public String getId() {
         return id;

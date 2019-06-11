@@ -244,7 +244,7 @@ public class SelectionAdapter extends RecyclerView.Adapter<SelectionAdapter.Sele
                 if (mNeedMoreYear) {
                     mListData = mSecondListData = mGenerateDateUtils.getMoreMonthList();
                 } else {
-                    mListData = mSecondListData = mGenerateDateUtils.getMonthList(address.getDate());
+                    mListData = null;
                 }
 
             }

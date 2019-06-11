@@ -2,6 +2,7 @@ package com.yang.assetmanage.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
@@ -163,14 +164,14 @@ public class DbUtils {
     public List<Asset> getAssetList(String billId) {
         Cursor cursor = null;
         List<Asset> assets = new ArrayList<>();
-        if (TextUtils.isEmpty(billId)){
+        if (TextUtils.isEmpty(billId)) {
             billId = "1";
         }
         try {
             cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE BILL_ID = ?", new String[]{billId});
             while (cursor.moveToNext()) {
                 String money = cursor.getString(cursor.getColumnIndex("MONEY"));
-                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
                 String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
                 String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
                 String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
@@ -204,27 +205,35 @@ public class DbUtils {
      "   REMARK        TEXT     NOT NULL\n" +
      */
     /**
+     * @param type
      * @param billId
+     * @param checkedId
      * @return
      */
-    public List<Asset> getAssetReportList(String billId,String data) {
+    public List<Asset> getAssetReportList(String type, String billId, String date, int checkedId) {
+
+        String month = checkedId + "";
+        if (checkedId < 10) {
+            month = "0" + month;
+        }
         Cursor cursor = null;
         List<Asset> assets = new ArrayList<>();
-        if (TextUtils.isEmpty(billId)){
+        if (TextUtils.isEmpty(billId)) {
             billId = "1";
         }
+        date = date + "-" + month;
         try {
-            //SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC; GROUP BY MONEY_TYPE ORDER BY MONEY_TYPE
-            cursor = mSqLiteDatabase.rawQuery("SELECT SUM(MONEY) as MONEY,MONEY_TYPE  FROM ASSET WHERE BILL_ID = ? GROUP BY MONEY_TYPE ORDER BY MONEY_TYPE ", new String[]{billId});
+            //SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC
+            cursor = mSqLiteDatabase.rawQuery("SELECT SUM(MONEY) as MONEY,MONEY_TYPE_ID  FROM ASSET WHERE MONEY_TYPE = ? AND BILL_ID = ? AND CRETE_DATA BETWEEN ? AND ? GROUP BY MONEY_TYPE_ID ORDER BY MONEY_TYPE_ID ", new String[]{type, billId, date + "-01", date + "-31"});
             while (cursor.moveToNext()) {
                 String money = cursor.getString(cursor.getColumnIndex("MONEY"));
-                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String moneyType = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
 //                String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
 //                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
 //                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
                 asset.setMoney(money);
-                asset.setMoneyName(getDictName(type).getName());
+                asset.setMoneyName(getDictName(moneyType).getName());
 //                asset.setCreteData(date);
 //                asset.setMemberName(getDictName(member));
 //                asset.setRemark(remark);
@@ -268,7 +277,7 @@ public class DbUtils {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex("_ID"));
                 String name = cursor.getString(cursor.getColumnIndex("NAME"));
-                dicts.add(new Dicts(id, name));
+                dicts.add(new Dicts(id, name, type));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,7 +327,10 @@ public class DbUtils {
     public void insert(String table, ContentValues contentValues) throws Exception {
         mSqLiteDatabase.beginTransaction();
         try {
-            mSqLiteDatabase.insert(table, null, contentValues);
+            long result = mSqLiteDatabase.insert(table, null, contentValues);
+            if (result == -1) {
+                throw new SQLException("插入异常");
+            }
             mSqLiteDatabase.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();

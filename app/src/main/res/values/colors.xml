@@ -6,7 +6,7 @@
     <!-- 绿色 -->
     <color name="global_green_color">#3de19a</color>
 
-    <color name="global_blue_color">#0000ff</color>
+    <color name="global_blue_color">#8ceaff</color>
 
     <color name="global_title_color_blue">#4391F7</color>
 
@@ -55,7 +55,7 @@
 
     <color name="global_coupon_bg">#F9F8F8</color>
 
-    <color name="global_orange_color">#ff7900</color>
+    <color name="global_orange_color">#ffd08c</color>
 
 
     <color name="global_list_text_color">#604F4F</color>

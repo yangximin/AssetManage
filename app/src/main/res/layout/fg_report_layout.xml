@@ -5,16 +5,56 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+    <RadioGroup
+        android:id="@+id/report_type_rg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/gray_radius_bg"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <RadioButton
+            android:id="@+id/report_expend_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/report_type_selector_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="支出"
+            android:textColor="@color/color_rb_selector" />
+
+        <RadioButton
+            android:id="@+id/report_income_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/report_type_selector_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="收入"
+            android:textColor="@color/color_rb_selector" />
+    </RadioGroup>
+
     <LinearLayout
         android:id="@+id/report_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/global_gray"
+        android:background="@color/global_orange_color"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="match_parent" />
+            android:id="@+id/report_year_tv"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/global_white_color"
+            android:layout_margin="3dp"
+            android:drawablePadding="-15dp"
+            android:drawableRight="@drawable/base_down_arrow_icon"
+            android:gravity="center"
+
+            android:text="2019年" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -32,10 +72,12 @@
         android:id="@+id/chart1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_above="@+id/seekBar1" />
+        android:layout_above="@+id/seekBar1"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/asset_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

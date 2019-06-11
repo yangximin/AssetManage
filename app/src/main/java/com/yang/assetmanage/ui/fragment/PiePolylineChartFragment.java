@@ -1,6 +1,7 @@
 
 package com.yang.assetmanage.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,13 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -32,6 +36,8 @@ import com.yang.assetmanage.adapter.RVAdapter;
 import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Asset;
+import com.yang.assetmanage.entity.SelectionDate;
+import com.yang.assetmanage.ui.SelectionDialogActivity;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.DensityUtil;
 import com.yang.assetmanage.utils.SPUtil;
@@ -39,8 +45,10 @@ import com.yang.assetmanage.utils.SPUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 
-public class PiePolylineChartFragment extends BaseFragment implements OnChartValueSelectedListener {
+
+public class PiePolylineChartFragment extends BaseFragment implements OnChartValueSelectedListener, RVAdapter.OnItemClickListener {
 
     private PieChart chart;
 
@@ -52,7 +60,20 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
     private RVAdapter<Asset> mAssetAdapter;
 
-    RadioGroup mRadioGroup;
+    RadioGroup mSelectorGroup;
+
+    RadioGroup mTypeSelectorGroup;
+
+    private TextView mYearSelector;
+
+    private int mClickType;
+    private RadioButton mExpendRb, mIncomeRb;
+    /**
+     * 日期类型
+     */
+    private final static int TYPE_DATE = 3;
+
+    private String mSelectType;
 
     @Override
     protected int getLayoutId() {
@@ -64,7 +85,11 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         chart = findViewById(R.id.chart1);
         mDataLl = findViewById(R.id.report_ll);
         mRecyclerView = findViewById(R.id.asset_rv);
-        mRadioGroup = findViewById(R.id.report_rg);
+        mSelectorGroup = findViewById(R.id.report_rg);
+        mYearSelector = findViewById(R.id.report_year_tv);
+        mTypeSelectorGroup = findViewById(R.id.report_type_rg);
+        mExpendRb = findViewById(R.id.report_expend_rb);
+        mIncomeRb = findViewById(R.id.report_income_rb);
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(5, 10, 5, 5);
@@ -102,12 +127,53 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
     }
 
     private void initSelector() {
-        for (int i = 0; i <= 12; i++) {
+        mTypeSelectorGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.report_expend_rb:
+                        mSelectType = Constants.Normal.TYPE_EXPEND;
+                        break;
+                    case R.id.report_income_rb:
+                        mSelectType = Constants.Normal.TYPE_INCOME;
+                        break;
+                }
+                initData();
+            }
+        });
+        mExpendRb.setChecked(true);
+        for (int i = 1; i <= 12; i++) {
             RadioButton radioButton = new RadioButton(mContext);
-            radioButton.setText(i+"月");
-            mRadioGroup.addView(radioButton);
+            radioButton.setLayoutParams(new ViewGroup.LayoutParams(DensityUtil.dip2px(mContext, 50), ViewGroup.LayoutParams.MATCH_PARENT));
+            radioButton.setBackgroundResource(R.drawable.report_selector_bg);
+            radioButton.setButtonDrawable(null);
+            radioButton.setGravity(Gravity.CENTER);
+//            radioButton.setTextColor(mContext.getResources().getColor(R.color.color_rb_selector));
+            radioButton.setText(i + "月");
+            radioButton.setId(i);
+            mSelectorGroup.addView(radioButton);
         }
+        mYearSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickType = TYPE_DATE;
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SelectionDialogActivity.class);
+                intent.putExtra(SelectionDialogActivity.TYPE_INTENT_TYPE, SelectionDialogActivity.DATE);
+                intent.putExtra(Constants.Normal.TYPE_SELECT_YEAR_MONTH, false);
+                startActivityForResult(intent, 1);
+                (getActivity()).overridePendingTransition(R.anim.slide_in_bottom, android.R.anim.fade_out);
+
+            }
+        });
+        mSelectorGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                initData();
+            }
+        });
     }
+
 
     private void initRcy() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -118,6 +184,7 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
             }
         };
         mRecyclerView.setAdapter(mAssetAdapter);
+        mAssetAdapter.setOnItemClickListener(this);
     }
 
     private void itemAssetConvert(RVAdapter.ViewHolder vH, Asset item, int position) {
@@ -134,18 +201,13 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         setData();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        initData();
-    }
-
     private void setData() {
-
+        int checkedId = mSelectorGroup.getCheckedRadioButtonId();
+        String year = mYearSelector.getText().toString().replace("年", "");
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
-        List<Asset> assets = DbUtils.getInstance().getAssetReportList(billId, null);
+        List<Asset> assets = DbUtils.getInstance().getAssetReportList(mSelectType, billId, year, checkedId);
         for (int i = 0; i < assets.size(); i++) {
             Asset asset = assets.get(i);
             entries.add(new PieEntry(Float.parseFloat(asset.getMoney()), asset.getMoneyName()));
@@ -240,4 +302,29 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         Log.i("PieChart", "nothing selected");
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            ArrayList obj = (ArrayList) data.getSerializableExtra(SelectionDialogActivity.TYPE_INTENT_SELECTION);
+            switch (mClickType) {
+                case TYPE_DATE:
+                    handleDate(obj);
+                    break;
+
+            }
+
+        }
+    }
+
+    private void handleDate(ArrayList list) {
+        SelectionDate selectionDate = (SelectionDate) list.get(0);
+        mYearSelector.setText(selectionDate.getName());
+        initData();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+//        Intent intent = new Intent(mContext, AssetListActivity.class);
+    }
 }

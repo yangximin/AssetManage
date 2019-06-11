@@ -149,7 +149,8 @@ public class AddExpendRecordFragment extends BaseFragment {
         cv.put("BILL_ID", mBillDict.getId());
         cv.put("USER_ID", mUser.getId());
         cv.put("MONEY", money);
-        cv.put("MONEY_TYPE", mTypeDict.getId());
+        cv.put("MONEY_TYPE_ID", mTypeDict.getId());
+        cv.put("MONEY_TYPE", mTypeDict.getType());
         cv.put("CRETE_DATA", mDateBtn.getText().toString());
         cv.put("MEMBER", mMemberDict.getId());
         cv.put("REMARK", mRemarkEdt.getText() == null ? "" : mRemarkEdt.getText().toString());

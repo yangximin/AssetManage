@@ -39,6 +39,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 "   USER_ID       INTEGER      NOT NULL,\n" +
                 "   MONEY         TEXT     NOT NULL,\n" +
                 "   MONEY_TYPE    INT      NOT NULL,\n" +
+                "   MONEY_TYPE_ID INT      NOT NULL,\n" +
                 "   CRETE_DATA    TEXT     NOT NULL,\n" +
                 "   MEMBER        TEXT     NOT NULL,\n" +
                 "   REMARK        TEXT     NOT NULL\n" +

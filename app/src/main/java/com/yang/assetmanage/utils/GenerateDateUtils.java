@@ -151,6 +151,10 @@ public class GenerateDateUtils {
     public List<Dicts> getExpendType() {
         return DbUtils.getInstance().getDictList("2");
     }
+
+    /**
+     * 收入类型
+     */
     public List<Dicts> getIncomeType() {
         return DbUtils.getInstance().getDictList("3");
     }

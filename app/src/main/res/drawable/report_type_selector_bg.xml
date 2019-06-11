@@ -4,18 +4,16 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
             <!--一共有六个属性-->
             <!--渐变-->
-            <gradient android:centerColor="#63cfc3" android:endColor="#57c5e9" android:startColor="#6fd99d" />
-            <stroke android:width="5dp" android:color="@color/global_transparent_color" />
-            <corners android:radius="5dp"/>
+            <!--<gradient android:centerColor="#63cfc3" android:endColor="#57c5e9" android:startColor="#6fd99d" />-->
+            <solid android:color="#8ceaff"/>
+            <corners android:radius="100px"/>
         </shape>
     </item>
     <item android:state_checked="false">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-            <!--一共有六个属性-->
             <!--渐变-->
             <solid android:color="@color/global_white_color" />
-            <corners android:radius="5dp"/>
-            <stroke android:width="3dp" android:color="@color/global_transparent_color" />
+            <corners android:radius="100px"/>
         </shape>
     </item>
 </selector>
