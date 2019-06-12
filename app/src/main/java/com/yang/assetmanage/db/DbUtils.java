@@ -148,6 +148,28 @@ public class DbUtils {
         }
         return bills;
     }
+
+    /**
+     * 查询表单
+     */
+    public String getBillName(String billId) {
+        String name = null;
+        Cursor cursor = null;
+        List<Bill> bills = new ArrayList<>();
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM BILL WHERE _ID = ?", new String[]{billId});
+            while (cursor.moveToNext()) {
+                name = cursor.getString(cursor.getColumnIndex("BILL_NAME"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return name;
+    }
 /**
  *   "   BILL_ID       INTEGER       NOT NULL,\n" +
  "   USER_ID       INTEGER      NOT NULL,\n" +
@@ -170,18 +192,25 @@ public class DbUtils {
         try {
             cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE BILL_ID = ?", new String[]{billId});
             while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
                 String money = cursor.getString(cursor.getColumnIndex("MONEY"));
-                String type = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
-                String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
+                String moneyType = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String typeId = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
+                String create_data = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
                 String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
                 String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
+                asset.setId(id);
+                asset.setBillId(billId);
+                asset.setBillName(getBillName(billId));
                 asset.setMoney(money);
-                Dicts typeDic = getDictName(type);
-                asset.setMoneyName(typeDic.getName());
-                asset.setMoneyType(typeDic.getType());
-                asset.setCreteData(date);
-                asset.setMemberName(getDictName(member).getName());
+                asset.setMoneyType(moneyType);
+                asset.setMoneyName(getDictName(typeId).getName());
+                asset.setMoneyTypeId(typeId);
+                asset.setCreteData(create_data);
+                Dicts memberDit = getDictName(member);
+                asset.setMemberName(memberDit.getName());
+                asset.setMember(member);
                 asset.setRemark(remark);
                 assets.add(asset);
             }
@@ -196,19 +225,56 @@ public class DbUtils {
     }
 
     /**
-     *   "   BILL_ID       INTEGER       NOT NULL,\n" +
-     "   USER_ID       INTEGER      NOT NULL,\n" +
-     "   MONEY         TEXT     NOT NULL,\n" +
-     "   MONEY_TYPE    INT      NOT NULL,\n" +
-     "   CRETE_DATA    TEXT     NOT NULL,\n" +
-     "   MEMBER        TEXT     NOT NULL,\n" +
-     "   REMARK        TEXT     NOT NULL\n" +
+     * 获取财务分类列表
      */
+    public List<Asset> getAssetTypeList(String typeId, String billId, String date, int checkedId) {
+
+        String month = checkedId + "";
+        if (checkedId < 10) {
+            month = "0" + month;
+        }
+        Cursor cursor = null;
+        List<Asset> assets = new ArrayList<>();
+        if (TextUtils.isEmpty(billId)) {
+            billId = "1";
+        }
+        date = date + "-" + month;
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE MONEY_TYPE_ID = ? AND BILL_ID = ? AND CRETE_DATA BETWEEN ? AND ?", new String[]{typeId, billId, date + "-01", date + "-31"});
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
+                String money = cursor.getString(cursor.getColumnIndex("MONEY"));
+                String moneyType = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String create_data = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
+                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
+                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
+                Asset asset = new Asset();
+                asset.setId(id);
+                asset.setBillId(billId);
+                asset.setBillName(getBillName(billId));
+                asset.setMoney(money);
+                asset.setMoneyType(moneyType);
+                asset.setMoneyName(getDictName(typeId).getName());
+                asset.setMoneyTypeId(typeId);
+                asset.setCreteData(create_data);
+                Dicts memberDit = getDictName(member);
+                asset.setMemberName(memberDit.getName());
+                asset.setMember(member);
+                asset.setRemark(remark);
+                assets.add(asset);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return assets;
+    }
+
     /**
-     * @param type
-     * @param billId
-     * @param checkedId
-     * @return
+     * 获取报表列表数据
      */
     public List<Asset> getAssetReportList(String type, String billId, String date, int checkedId) {
 
@@ -223,17 +289,17 @@ public class DbUtils {
         }
         date = date + "-" + month;
         try {
-            //SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC
             cursor = mSqLiteDatabase.rawQuery("SELECT SUM(MONEY) as MONEY,MONEY_TYPE_ID  FROM ASSET WHERE MONEY_TYPE = ? AND BILL_ID = ? AND CRETE_DATA BETWEEN ? AND ? GROUP BY MONEY_TYPE_ID ORDER BY MONEY_TYPE_ID ", new String[]{type, billId, date + "-01", date + "-31"});
             while (cursor.moveToNext()) {
                 String money = cursor.getString(cursor.getColumnIndex("MONEY"));
-                String moneyType = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
+                String moneyId = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
 //                String date = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
 //                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
 //                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
                 Asset asset = new Asset();
                 asset.setMoney(money);
-                asset.setMoneyName(getDictName(moneyType).getName());
+                asset.setMoneyName(getDictName(moneyId).getName());
+                asset.setMoneyTypeId(moneyId);
 //                asset.setCreteData(date);
 //                asset.setMemberName(getDictName(member));
 //                asset.setRemark(remark);
@@ -335,6 +401,51 @@ public class DbUtils {
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("插入异常");
+        } finally {
+            mSqLiteDatabase.endTransaction();
+        }
+    }
+
+    /**
+     * 插入数据
+     *
+     * @param table
+     * @param contentValues
+     * @throws Exception
+     */
+    public void updata(String table, ContentValues contentValues, String[] param) throws Exception {
+        mSqLiteDatabase.beginTransaction();
+        try {
+            long result = mSqLiteDatabase.update(table, contentValues, "_ID=?", param);
+            if (result == -1) {
+                throw new SQLException("修改异常");
+            }
+            mSqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("修改异常");
+        } finally {
+            mSqLiteDatabase.endTransaction();
+        }
+    }
+
+    /**
+     * 插入数据
+     *
+     * @param table
+     * @throws Exception
+     */
+    public void delete(String table, String whereClause, String[] param) throws Exception {
+        mSqLiteDatabase.beginTransaction();
+        try {
+            long result = mSqLiteDatabase.delete(table, whereClause, param);
+            if (result == -1) {
+                throw new SQLException("删除异常");
+            }
+            mSqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("删除异常");
         } finally {
             mSqLiteDatabase.endTransaction();
         }

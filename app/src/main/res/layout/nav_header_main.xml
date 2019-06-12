@@ -12,6 +12,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <TextView
+        android:id="@+id/bill_edt_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/global_white"
+        android:text="账本编辑"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"

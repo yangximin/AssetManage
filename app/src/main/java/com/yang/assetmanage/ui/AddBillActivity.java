@@ -11,6 +11,8 @@ import com.yang.assetmanage.entity.User;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.SPUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by yangximin on 2019/5/29.
  */
@@ -22,6 +24,7 @@ public class AddBillActivity extends BaseActivity {
     private TextView mConfirmBtn;
 
     private User mUser;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_bill_layout;
@@ -41,19 +44,20 @@ public class AddBillActivity extends BaseActivity {
 
     private void addBill() {
         mUser = (User) SPUtil.getObjData(this, Constants.Sp.SP_KEY_USER_INFO);
-        if(mUser==null){
+        if (mUser == null) {
             return;
         }
         String billName = mBillEdt.getText().toString();
-        if(TextUtils.isEmpty(billName)){
+        if (TextUtils.isEmpty(billName)) {
             showMessage("请输入账本名字");
             return;
         }
-        DbUtils dbUtils =  DbUtils.getInstance();
-        boolean isSuccess = dbUtils.insertBill(mUser.getId(),billName);
-        if(isSuccess){
+        DbUtils dbUtils = DbUtils.getInstance();
+        boolean isSuccess = dbUtils.insertBill(mUser.getId(), billName);
+        if (isSuccess) {
+            EventBus.getDefault().post(Constants.Event.EVENT_ADD_BILL_SUCCESS);
             finish();
-        }else {
+        } else {
             showMessage("账本名字重复,请重新输入");
         }
     }

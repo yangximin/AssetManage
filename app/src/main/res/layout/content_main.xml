@@ -19,10 +19,11 @@
             android:layout_height="150dp">
 
             <ImageView
+                android:id="@+id/asset_add_bg_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_bank_hxbk_bg" />
+                android:background="@drawable/icon_bank_hxbk_bg" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,6 +35,7 @@
                 android:textColor="@color/global_white"
                 android:textSize="@dimen/title_icon_size" />
             <TextView
+                android:id="@+id/asset_add_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/global_primary_size"

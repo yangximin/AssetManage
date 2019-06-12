@@ -9,6 +9,14 @@ public class Bill extends BaseEntity{
 
     private String billName;
 
+    public Bill() {
+    }
+
+    public Bill(String id, String billName) {
+        this.id = id;
+        this.billName = billName;
+    }
+
     public String getId() {
         return id;
     }

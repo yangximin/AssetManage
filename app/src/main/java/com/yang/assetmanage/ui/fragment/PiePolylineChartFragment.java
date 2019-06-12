@@ -37,12 +37,14 @@ import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Asset;
 import com.yang.assetmanage.entity.SelectionDate;
+import com.yang.assetmanage.ui.AssetListActivity;
 import com.yang.assetmanage.ui.SelectionDialogActivity;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.DensityUtil;
 import com.yang.assetmanage.utils.SPUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -172,6 +174,9 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
                 initData();
             }
         });
+        Calendar c = Calendar.getInstance();
+        int month = c.get(Calendar.MONTH) + 1;
+        mSelectorGroup.check(month);
     }
 
 
@@ -189,6 +194,7 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
     private void itemAssetConvert(RVAdapter.ViewHolder vH, Asset item, int position) {
         View view = vH.getView(R.id.asset_main_date_rl);
+        vH.setVisibility(R.id.asset_main_member_edt, View.GONE);
         view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(mContext, 40)));
         vH.setText(R.id.asset_main_type_tv, item.getMoneyName());
 //        vH.setText(R.id.asset_main_date_tv, item.getCreteData());
@@ -325,6 +331,16 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
 
     @Override
     public void onItemClick(View view, int position) {
-//        Intent intent = new Intent(mContext, AssetListActivity.class);
+        Asset asset = mAssetAdapter.getData(position);
+        int date = mSelectorGroup.getCheckedRadioButtonId();
+        String year = mYearSelector.getText().toString().replace("年", "");
+        String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
+        Intent intent = new Intent(mContext, AssetListActivity.class);
+        intent.putExtra(Constants.Intent.INTENT_KEY_YEAR, year);
+        intent.putExtra(Constants.Intent.INTENT_KEY_BILL_ID, billId);
+        intent.putExtra(Constants.Intent.INTENT_KEY_TYPE_ID, asset.getMoneyTypeId());
+        intent.putExtra(Constants.Intent.INTENT_KEY_TYPE, mSelectType);
+        intent.putExtra(Constants.Intent.INTENT_KEY_DAY, date);
+        mContext.startActivity(intent);
     }
 }

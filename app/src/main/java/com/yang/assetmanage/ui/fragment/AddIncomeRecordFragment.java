@@ -2,6 +2,7 @@ package com.yang.assetmanage.ui.fragment;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.yang.assetmanage.R;
 import com.yang.assetmanage.app.MyApplication;
 import com.yang.assetmanage.db.DbUtils;
+import com.yang.assetmanage.entity.Asset;
 import com.yang.assetmanage.entity.Dicts;
 import com.yang.assetmanage.entity.SelectionDate;
 import com.yang.assetmanage.entity.User;
@@ -74,6 +76,10 @@ public class AddIncomeRecordFragment extends BaseFragment {
 
     User mUser;
 
+    Asset mAsset;
+
+    boolean isAlter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_expend_record_layout;
@@ -123,7 +129,11 @@ public class AddIncomeRecordFragment extends BaseFragment {
         mConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmCommit();
+                if (isAlter) {
+                    alterAsset();
+                } else {
+                    confirmCommit();
+                }
             }
         });
 
@@ -167,6 +177,47 @@ public class AddIncomeRecordFragment extends BaseFragment {
 
     }
 
+    /**
+     * 修改记录
+     */
+    private void alterAsset() {
+        String money = mMoneyEdt.getText().toString();
+        if (TextUtils.isEmpty(money)) {
+            showMessage("支出金额不能为空");
+            return;
+        }
+        /**
+         *                 "   BILL_ID       INTEGER      PRIMARY KEY AUTOINCREMENT,\n" +
+         "   USER_ID       INTEGER      NOT NULL,\n" +
+         "   MONEY         TEXT     NOT NULL,\n" +
+         "   MONEY_TYPE    INT      NOT NULL,\n" +
+         "   CRETE_DATA    TEXT     NOT NULL,\n" +
+         "   MEMBER        TEXT     NOT NULL,\n" +
+         "   REMARK        TEXT     NOT NULL\n" +
+         ");");
+         */
+        ContentValues cv = new ContentValues();
+        cv.put("BILL_ID", mBillDict.getId());
+        cv.put("USER_ID", mUser.getId());
+        cv.put("MONEY", money);
+        cv.put("MONEY_TYPE_ID", mTypeDict.getId());
+        cv.put("MONEY_TYPE", mTypeDict.getType());
+        cv.put("CRETE_DATA", mDateBtn.getText().toString());
+        cv.put("MEMBER", mMemberDict.getId());
+        cv.put("REMARK", mRemarkEdt.getText() == null ? "" : mRemarkEdt.getText().toString());
+        try {
+            DbUtils.getInstance().updata("ASSET", cv, new String[]{mAsset.getId()});
+            showMessage("修改记录成功");
+            EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
+            getActivity().setResult(RESULT_OK);
+            getActivity().finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMessage("数据异常，请重试");
+        }
+
+    }
+
     private void toSelectActivity(List<Dicts> dicts) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), SelectionDialogActivity.class);
@@ -181,10 +232,25 @@ public class AddIncomeRecordFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mTypeDict = GenerateDateUtils.getInstance().getExpendType().get(0);
-        mBillDict = GenerateDateUtils.getInstance().getBillList().get(0);
-        mMemberDict = GenerateDateUtils.getInstance().getMemberDicts().get(0);
-        mDateBtn.setText(GenerateDateUtils.getInstance().getCurrentTime());
+        String createTime;
+        Bundle bundle = getArguments();
+        isAlter = bundle != null && bundle.getBoolean(Constants.Intent.INTENT_KEY_BOOLEAN);
+        if (isAlter) {
+            mAsset = (Asset) bundle.getSerializable(Constants.Intent.INTENT_KEY_OBJ);
+            mConfirmBtn.setText("修改");
+            mTypeDict = new Dicts(mAsset.getMoneyTypeId(), mAsset.getMoneyName(), mAsset.getMoneyType());
+            mBillDict = new Dicts(mAsset.getBillId(), mAsset.getBillName());
+            mMemberDict = new Dicts(mAsset.getMember(), mAsset.getMemberName());
+            createTime = mAsset.getCreteData();
+            mMoneyEdt.setText(mAsset.getMoney());
+            mRemarkEdt.setText(mAsset.getRemark());
+        } else {
+            mTypeDict = GenerateDateUtils.getInstance().getIncomeType().get(0);
+            mBillDict = GenerateDateUtils.getInstance().getBillList().get(0);
+            mMemberDict = GenerateDateUtils.getInstance().getMemberDicts().get(0);
+            createTime = GenerateDateUtils.getInstance().getCurrentTime();
+        }
+        mDateBtn.setText(createTime);
         mTypeBtn.setText(mTypeDict.getName());
         mBillBtn.setText(mBillDict.getName());
         mMemberBtn.setText(mMemberDict.getName());
@@ -225,5 +291,14 @@ public class AddIncomeRecordFragment extends BaseFragment {
             date.append("-").append(selectionDate.getDate());
         }
         mDateBtn.setText(date.toString().replaceFirst("-", ""));
+    }
+
+    public static AddIncomeRecordFragment getInstance(Asset asset) {
+        AddIncomeRecordFragment fragment = new AddIncomeRecordFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.Intent.INTENT_KEY_OBJ, asset);
+        bundle.putSerializable(Constants.Intent.INTENT_KEY_BOOLEAN, true);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 }

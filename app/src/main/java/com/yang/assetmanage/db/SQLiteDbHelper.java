@@ -42,7 +42,8 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
                 "   MONEY_TYPE_ID INT      NOT NULL,\n" +
                 "   CRETE_DATA    TEXT     NOT NULL,\n" +
                 "   MEMBER        TEXT     NOT NULL,\n" +
-                "   REMARK        TEXT     NOT NULL\n" +
+                "   REMARK        TEXT     NOT NULL,\n" +
+                "FOREIGN KEY (BILL_ID) REFERENCES BILL(_ID) ON DELETE CASCADE" +
                 ");");
         //账本表
         db.execSQL("CREATE TABLE BILL(\n" +

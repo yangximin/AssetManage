@@ -3,13 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <TextView
         android:id="@+id/item_bill_name_tv"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_centerInParent="true"
+        android:background="@drawable/icon_bank_pcbc_bg"
         android:gravity="center"
-        android:textSize="20sp"
         android:textColor="@color/global_white_color"
-        android:background="@drawable/icon_bank_pcbc_bg" />
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/bill_del_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:padding="5dp"
+        android:textColor="@color/global_white"
+        android:text="删除" />
 </RelativeLayout>

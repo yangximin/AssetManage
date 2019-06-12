@@ -1,10 +1,12 @@
 package com.yang.assetmanage.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by yangximin on 2019/5/31.
  */
 
-public class Asset {
+public class Asset implements Serializable {
     /**
      *  _ID       INTEGER      PRIMARY KEY AUTOINCREMENT,
      " +
@@ -18,9 +20,11 @@ public class Asset {
      */
     private String id;
     private String billId;
+    private String billName;
     private String userId;
     private String money;
     private String moneyType;
+    private String moneyTypeId;
     private String moneyName;
     private String creteData;
     private String member;
@@ -105,5 +109,21 @@ public class Asset {
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public String getMoneyTypeId() {
+        return moneyTypeId;
+    }
+
+    public void setMoneyTypeId(String moneyTypeId) {
+        this.moneyTypeId = moneyTypeId;
+    }
+
+    public String getBillName() {
+        return billName;
+    }
+
+    public void setBillName(String billName) {
+        this.billName = billName;
     }
 }

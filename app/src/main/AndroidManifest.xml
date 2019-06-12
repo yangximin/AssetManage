@@ -53,6 +53,9 @@
         <activity
             android:name=".ui.AssetListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AssetDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
