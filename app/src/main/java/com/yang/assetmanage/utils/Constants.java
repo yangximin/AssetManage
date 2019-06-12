@@ -41,6 +41,6 @@ public class Constants {
     }
     public interface  Event{
         String EVENT_ADD_ASSET_SUCCESS = "event_add_asset_success";
-        String EVENT_ADD_BILL_SUCCESS = "event_add_asset_success";
+        String EVENT_ADD_BILL_SUCCESS = "event_add_bill_success";
     }
 }

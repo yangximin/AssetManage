@@ -246,7 +246,12 @@ public class AddIncomeRecordFragment extends BaseFragment {
             mRemarkEdt.setText(mAsset.getRemark());
         } else {
             mTypeDict = GenerateDateUtils.getInstance().getIncomeType().get(0);
-            mBillDict = GenerateDateUtils.getInstance().getBillList().get(0);
+            String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
+            if (TextUtils.isEmpty(billId)) {
+                mBillDict = GenerateDateUtils.getInstance().getBillList().get(0);
+            } else {
+                mBillDict = new Dicts(billId, DbUtils.getInstance().getBillName(billId));
+            }
             mMemberDict = GenerateDateUtils.getInstance().getMemberDicts().get(0);
             createTime = GenerateDateUtils.getInstance().getCurrentTime();
         }
@@ -288,7 +293,7 @@ public class AddIncomeRecordFragment extends BaseFragment {
         StringBuilder date = new StringBuilder();
         for (Object obj : list) {
             SelectionDate selectionDate = (SelectionDate) obj;
-            date.append("-").append(selectionDate.getDate());
+            date.append("-").append(selectionDate.getDate() < 10 ? "0" + selectionDate.getDate() : selectionDate.getDate());
         }
         mDateBtn.setText(date.toString().replaceFirst("-", ""));
     }

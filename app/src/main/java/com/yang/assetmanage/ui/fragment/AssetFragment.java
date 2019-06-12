@@ -30,6 +30,8 @@ import com.yang.assetmanage.ui.BaseActivity;
 import com.yang.assetmanage.utils.Constants;
 import com.yang.assetmanage.utils.SPUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 /**
@@ -113,6 +115,10 @@ public class AssetFragment extends BaseFragment implements RVAdapter.OnItemClick
         if (TextUtils.isEmpty(billId)) {
             billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
         }
+        if (TextUtils.isEmpty(billId)) {
+            mBillNameTv.setText("日常账本");
+            mBillIv.setBackgroundResource(mDrawableIds[0]);
+        }
         try {
             int pos = (Integer.parseInt(billId) - 1) % 4;
             mBillIv.setBackgroundResource(mDrawableIds[pos]);
@@ -159,6 +165,7 @@ public class AssetFragment extends BaseFragment implements RVAdapter.OnItemClick
                 mBillNameTv.setText(bill.getBillName());
                 int pos = position % 4;
                 mBillIv.setBackgroundResource(mDrawableIds[pos]);
+                EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
             }
         });
         mBillAdapter.addFooterView(footerView);
@@ -184,7 +191,7 @@ public class AssetFragment extends BaseFragment implements RVAdapter.OnItemClick
         vH.setText(R.id.item_bill_name_tv, bill.getBillName());
         TextView tv = vH.getView(R.id.item_bill_name_tv);
         View delView = vH.getView(R.id.bill_del_tv);
-        if (isBillEdit) {
+        if (position != 0 && isBillEdit) {
             delView.setVisibility(View.VISIBLE);
         } else {
             delView.setVisibility(View.GONE);
@@ -209,7 +216,11 @@ public class AssetFragment extends BaseFragment implements RVAdapter.OnItemClick
                         try {
                             DbUtils.getInstance().delete("BILL", "_ID=?", new String[]{bill.getId()});
                             showMessage("删除成功");
-                            mBillManageBtn.performLongClick();
+                            SPUtil.saveData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
+                            mDrawerLayout.closeDrawers();
+                            mBillManageBtn.performClick();
+                            initRcyViewData(null);
+                            EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
                         } catch (Exception e) {
                             e.printStackTrace();
                             showMessage("删除失败");
