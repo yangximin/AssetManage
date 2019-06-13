@@ -34,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Toast mToast;
 
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initTitleBar(View rootView) {
-        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+         toolbar = rootView.findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         //标题栏根布局
 //        mTitleBar = rootView.findViewById(R.id.rel_title_bar);
@@ -98,6 +99,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 //
 //                    }
 //                });
+    }
+
+    protected void setTitle(String title) {
+        toolbar.setTitle(title);
     }
 
     /**

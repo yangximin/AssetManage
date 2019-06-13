@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        setTitle("用户登录");
         mUserNameEdt = findViewById(R.id.userName);
         mPwdEdt = findViewById(R.id.userPassword);
         mLoginBtn = findViewById(R.id.login_button);
