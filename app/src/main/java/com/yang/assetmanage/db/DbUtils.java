@@ -223,6 +223,49 @@ public class DbUtils {
         }
         return assets;
     }
+/**
+ *   "   BILL_ID       INTEGER       NOT NULL,\n" +
+ "   USER_ID       INTEGER      NOT NULL,\n" +
+ "   MONEY         TEXT     NOT NULL,\n" +
+ "   MONEY_TYPE    INT      NOT NULL,\n" +
+ "   CRETE_DATA    TEXT     NOT NULL,\n" +
+ "   MEMBER        TEXT     NOT NULL,\n" +
+ "   REMARK        TEXT     NOT NULL\n" +
+ */
+    public Asset getAssetInfo(String recordId) {
+        Cursor cursor = null;
+        Asset asset = new Asset();
+        try {
+            cursor = mSqLiteDatabase.rawQuery("SELECT * FROM ASSET WHERE _ID = ?", new String[]{recordId});
+            if (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("_ID"));
+                String money = cursor.getString(cursor.getColumnIndex("MONEY"));
+                String moneyType = cursor.getString(cursor.getColumnIndex("MONEY_TYPE"));
+                String typeId = cursor.getString(cursor.getColumnIndex("MONEY_TYPE_ID"));
+                String create_data = cursor.getString(cursor.getColumnIndex("CRETE_DATA"));
+                String member = cursor.getString(cursor.getColumnIndex("MEMBER"));
+                String remark = cursor.getString(cursor.getColumnIndex("REMARK"));
+                asset.setId(id);
+                asset.setMoney(money);
+                asset.setMoneyType(moneyType);
+                asset.setMoneyName(getDictName(typeId).getName());
+                asset.setMoneyTypeId(typeId);
+                asset.setCreteData(create_data);
+                Dicts memberDit = getDictName(member);
+                asset.setMemberName(memberDit.getName());
+                asset.setMember(member);
+                asset.setRemark(remark);
+                return asset;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return asset;
+    }
 
     /**
      * 获取财务分类列表

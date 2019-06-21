@@ -176,6 +176,7 @@ public class PiePolylineChartFragment extends BaseFragment implements OnChartVal
         });
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
         mSelectorGroup.check(month);
     }
 
