@@ -59,6 +59,7 @@ public class AddMainAssetActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        setTitle("添加财务记录");
         AddExpendRecordFragment expendRecordFragment = new AddExpendRecordFragment();
         AddIncomeRecordFragment incomeRecordFragment = new AddIncomeRecordFragment();
         tabFragments.add(expendRecordFragment);

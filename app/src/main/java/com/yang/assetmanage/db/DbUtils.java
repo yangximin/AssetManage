@@ -473,12 +473,32 @@ public class DbUtils {
     }
 
     /**
-     * 插入数据
      *
      * @param table
      * @throws Exception
      */
     public void delete(String table, String whereClause, String[] param) throws Exception {
+        mSqLiteDatabase.beginTransaction();
+        try {
+            long result = mSqLiteDatabase.delete(table, whereClause, param);
+            if (result == -1) {
+                throw new SQLException("删除异常");
+            }
+            mSqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("删除异常");
+        } finally {
+            mSqLiteDatabase.endTransaction();
+        }
+    }
+    /**
+     * 删除数据
+     *
+     * @param table
+     * @throws Exception
+     */
+    public void deleteAsset(String table, String whereClause, String[] param) throws Exception {
         mSqLiteDatabase.beginTransaction();
         try {
             long result = mSqLiteDatabase.delete(table, whereClause, param);

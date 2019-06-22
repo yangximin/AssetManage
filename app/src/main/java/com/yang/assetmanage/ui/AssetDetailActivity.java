@@ -37,6 +37,7 @@ public class AssetDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        setTitle("记录详情");
         Asset asset = (Asset) getIntent().getSerializableExtra(Constants.Intent.INTENT_KEY_OBJ);
         String type = getIntent().getStringExtra(Constants.Intent.INTENT_KEY_STR);
         Fragment fragment;

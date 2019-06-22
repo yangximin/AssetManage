@@ -126,6 +126,6 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        setTitle("注册");
     }
 }

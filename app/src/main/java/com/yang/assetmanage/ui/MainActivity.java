@@ -12,6 +12,7 @@ import com.yang.assetmanage.adapter.TabPagerAdapter;
 import com.yang.assetmanage.db.DbUtils;
 import com.yang.assetmanage.entity.Bill;
 import com.yang.assetmanage.ui.fragment.AssetFragment;
+import com.yang.assetmanage.ui.fragment.MyAccountFragment;
 import com.yang.assetmanage.ui.fragment.PiePolylineChartFragment;
 import com.yang.assetmanage.view.CustomRadioGroup;
 
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         listFragment = new ArrayList<>();
         listFragment.add(new PiePolylineChartFragment());
         listFragment.add(new AssetFragment());
-        listFragment.add(new AssetFragment());
+        listFragment.add(new MyAccountFragment());
         mViewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), listFragment, mTabItemTitles));
         mViewPager.setOffscreenPageLimit(listFragment.size());
         mViewPager.setCurrentItem(1);

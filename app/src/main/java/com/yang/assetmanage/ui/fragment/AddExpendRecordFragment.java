@@ -1,6 +1,8 @@
 package com.yang.assetmanage.ui.fragment;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -79,6 +81,8 @@ public class AddExpendRecordFragment extends BaseFragment {
 
     private Asset mAsset;
 
+    private View mDelBtn;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_expend_record_layout;
@@ -93,6 +97,7 @@ public class AddExpendRecordFragment extends BaseFragment {
         mMemberBtn = findViewById(R.id.expend_member_edt);
         mRemarkEdt = findViewById(R.id.expend_remark_edt);
         mConfirmBtn = findViewById(R.id.login_button);
+        mDelBtn = findViewById(R.id.del_button);
         initListener();
     }
 
@@ -135,8 +140,41 @@ public class AddExpendRecordFragment extends BaseFragment {
                 }
             }
         });
+        mDelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAsset();
+            }
+        });
 
 
+    }
+
+    private void deleteAsset() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+                .setTitle("温馨提示")
+                .setMessage("是否确认删除这条财务记录？")
+                .setPositiveButton("确认删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            DbUtils.getInstance().delete("Asset", "_ID=?", new String[]{mAsset.getId()});
+                            showMessage("删除成功");
+                            SPUtil.saveData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");
+                            getActivity().finish();
+                            EventBus.getDefault().post(Constants.Event.EVENT_ADD_ASSET_SUCCESS);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            showMessage("删除失败");
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
 
@@ -246,6 +284,9 @@ public class AddExpendRecordFragment extends BaseFragment {
             createTime = mAsset.getCreteData();
             mMoneyEdt.setText(mAsset.getMoney());
             mRemarkEdt.setText(mAsset.getRemark());
+            ((TextView) findViewById(R.id.expend_money_tv)).setText("支出金额");
+            ((TextView) findViewById(R.id.expend_type_tv)).setText("支出类型");
+            mDelBtn.setVisibility(View.VISIBLE);
         } else {
             mTypeDict = GenerateDateUtils.getInstance().getExpendType().get(0);
             String billId = (String) SPUtil.getData(MyApplication.getInstance(), Constants.Sp.SP_KEY_BILL_ID, "");

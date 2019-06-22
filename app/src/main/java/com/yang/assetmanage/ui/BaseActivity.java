@@ -158,7 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void statusBarDarkFont() {
         mImmersionBar
                 .statusBarDarkFont(true, 0.2f)
-                .statusBarColor(R.color.component_blue_color)
+                .statusBarColor(R.color.component_transparent_color)
                 .fitsSystemWindows(true)
                 .keyboardEnable(true)
                 .init();

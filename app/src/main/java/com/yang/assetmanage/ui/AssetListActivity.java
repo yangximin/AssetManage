@@ -44,6 +44,7 @@ public class AssetListActivity extends BaseActivity implements RVAdapter.OnItemC
 
     @Override
     protected void initData() {
+        setTitle("财务分类列表");
         mTypeId = getIntent().getStringExtra(Constants.Intent.INTENT_KEY_TYPE_ID);
         mType = getIntent().getStringExtra(Constants.Intent.INTENT_KEY_TYPE);
         mBillId = getIntent().getStringExtra(Constants.Intent.INTENT_KEY_BILL_ID);

@@ -64,6 +64,6 @@ public class AddBillActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        setTitle("新增账本");
     }
 }

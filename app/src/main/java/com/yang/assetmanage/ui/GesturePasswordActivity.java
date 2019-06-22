@@ -67,7 +67,7 @@ public class GesturePasswordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        setTitle("手势密码 ");
     }
 
 
@@ -202,6 +202,7 @@ public class GesturePasswordActivity extends BaseActivity {
             String encryptPwd = EncryptUtil.encodeByMd5(GetPassString(pattern));
             if (TextUtils.equals(spPwd, encryptPwd)) {
                 toActivity(MainActivity.class);
+                finish();
             } else {
                 gestureFail();
             }

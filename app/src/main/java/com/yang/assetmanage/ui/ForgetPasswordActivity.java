@@ -46,6 +46,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        setTitle("忘记密码");
         mConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
