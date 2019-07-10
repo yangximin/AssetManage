@@ -274,6 +274,8 @@ public class AddExpendRecordFragment extends BaseFragment {
     protected void initData() {
         String createTime;
         Bundle bundle = getArguments();
+        ((TextView) findViewById(R.id.expend_money_tv)).setText("支出金额");
+        ((TextView) findViewById(R.id.expend_type_tv)).setText("支出类型");
         isAlter = bundle != null && bundle.getBoolean(Constants.Intent.INTENT_KEY_BOOLEAN);
         if (isAlter) {
             mAsset = (Asset) bundle.getSerializable(Constants.Intent.INTENT_KEY_OBJ);
@@ -284,8 +286,6 @@ public class AddExpendRecordFragment extends BaseFragment {
             createTime = mAsset.getCreteData();
             mMoneyEdt.setText(mAsset.getMoney());
             mRemarkEdt.setText(mAsset.getRemark());
-            ((TextView) findViewById(R.id.expend_money_tv)).setText("支出金额");
-            ((TextView) findViewById(R.id.expend_type_tv)).setText("支出类型");
             mDelBtn.setVisibility(View.VISIBLE);
         } else {
             mTypeDict = GenerateDateUtils.getInstance().getExpendType().get(0);
